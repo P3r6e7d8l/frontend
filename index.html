@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.unsplash.com https://*.unsplash.com https://res.cloudinary.com https://*.cloudinary.com data: blob:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://luminabackend-inky.vercel.app http://127.0.0.1:3000 https://api.cloudinary.com https://res.cloudinary.com;">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <title>LUMINA · photography portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ---------- GLOBAL ---------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: #0b0d10; color: #e9edf2; line-height: 1.5; padding: 0 2rem 3rem; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    ::selection { background: #c084fc; color: #0b0d10; }
+    .app { max-width: 1400px; width: 100%; margin: 0 auto; }
+    h1, h2, h3 { font-weight: 500; letter-spacing: -0.02em; }
+    .accent { color: #c084fc; font-weight: 600; }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0 0.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
+    .logo { font-size: 1.8rem; font-weight: 600; letter-spacing: -0.03em; display: flex; align-items: center; gap: 0.4rem; }
+    .logo i { color: #c084fc; font-size: 2rem; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { color: #b0b8c5; text-decoration: none; font-weight: 450; font-size: 1rem; transition: 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+    .nav-links a i { font-size: 0.9rem; opacity: 0.8; }
+    .nav-links a:hover, .nav-links a.active { color: white; }
+    .nav-links a.active i { color: #c084fc; }
+
+    /* ---------- BUTTONS ---------- */
+    .btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 0.6rem 1.2rem; border-radius: 40px; font-weight: 500; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: 0.2s; backdrop-filter: blur(4px); }
+    .btn-primary { background: #c084fc; border: 1px solid #c084fc; color: #0b0d10; font-weight: 600; }
+    .btn-primary i { color: #0b0d10; }
+    .btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+    .btn-primary:hover { background: #b16eff; border-color: #b16eff; }
+    .btn-outline { background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); }
+    .btn-danger { background: #f43f5e; border: 1px solid #f43f5e; color: white; font-weight: 600; }
+    .btn-danger:hover { background: #e11d48; border-color: #e11d48; }
+    .btn-cloud { background: #38bdf8; border: 1px solid #38bdf8; color: #0b0d10; font-weight: 600; }
+    .btn-cloud:hover { background: #0ea5e9; border-color: #0ea5e9; }
+    .btn-cloud i { color: #0b0d10; }
+    .btn-link { background: transparent; border: none; color: #c084fc; font-size: 0.85rem; cursor: pointer; padding: 0.3rem; transition: 0.2s; }
+    .btn-link:hover { color: #b16eff; text-decoration: underline; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ---------- DASHBOARD HEADER ---------- */
+    .dashboard-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.2rem; flex-wrap: wrap; gap: 1.5rem; }
+    .dashboard-header h1 { font-size: 2.6rem; font-weight: 500; line-height: 1.2; }
+    .dashboard-header h1 span { color: #c084fc; font-weight: 600; }
+    .stats { display: flex; gap: 2rem; background: rgba(20, 24, 30, 0.7); backdrop-filter: blur(8px); padding: 0.9rem 2rem; border-radius: 80px; border: 1px solid rgba(255, 255, 255, 0.05); flex-wrap: wrap; }
+    .stat-item { display: flex; align-items: center; gap: 0.7rem; }
+    .stat-item i { font-size: 1.4rem; color: #c084fc; opacity: 0.9; }
+    .stat-item div { display: flex; flex-direction: column; }
+    .stat-number { font-weight: 600; font-size: 1.2rem; }
+    .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #9aa3b2; }
+
+    /* ---------- ADMIN CONTROL BAR ---------- */
+    .edit-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem; background: linear-gradient(135deg, #181e26 0%, #12171e 100%); border: 1px solid rgba(192, 132, 252, 0.3); border-radius: 60px; padding: 0.8rem 1.8rem; margin-bottom: 2.5rem; box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.8); }
+    .edit-bar.hidden { display: none; }
+    .edit-bar .edit-label { display: flex; align-items: center; gap: 0.8rem; font-weight: 500; color: #cfd7e6; }
+    .edit-bar .edit-label i { background: #c084fc; color: #0b0d10; padding: 0.4rem; border-radius: 50%; font-size: 0.9rem; }
+    .edit-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
+    .pill-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); color: #e9edf2; padding: 0.6rem 1.3rem; border-radius: 40px; font-size: 0.9rem; font-weight: 450; display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; transition: 0.2s; }
+    .pill-btn i { font-size: 0.9rem; color: #c084fc; }
+    .pill-btn:hover { background: rgba(255, 255, 255, 0.12); border-color: #c084fc; }
+
+    /* ---------- CONNECTION STATUS ---------- */
+    .conn-status { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #9aa3b2; padding: 0.4rem 0.9rem; background: rgba(20, 24, 30, 0.7); border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.05); }
+    .conn-dot { width: 8px; height: 8px; border-radius: 50%; background: #9aa3b2; }
+    .conn-dot.online { background: #4ade80; box-shadow: 0 0 8px rgba(74, 222, 128, 0.7); }
+    .conn-dot.offline { background: #f87171; box-shadow: 0 0 8px rgba(248, 113, 113, 0.7); }
+
+    /* ---------- GALLERY ---------- */
+    .gallery-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .gallery-header h2 { font-size: 1.6rem; font-weight: 450; }
+    .gallery-header h2 i { color: #c084fc; margin-right: 0.5rem; }
+
+    /* ---------- PHOTO GRID ---------- */
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.8rem; margin-bottom: 3rem; }
+    .photo-card { background: #14181f; border-radius: 24px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.25s ease, border-color 0.2s, opacity 0.3s; box-shadow: 0 20px 30px -20px black; display: flex; flex-direction: column; }
+    .photo-card:hover { transform: translateY(-6px); border-color: rgba(192, 132, 252, 0.4); }
+    .photo-card.deleting { opacity: 0.4; transform: scale(0.95); pointer-events: none; }
+    .photo-thumb { position: relative; aspect-ratio: 4 / 3; background: #1e232b; overflow: hidden; }
+    .photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
+    .photo-card:hover .photo-thumb img { transform: scale(1.02); }
+    .photo-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; opacity: 0; transition: 0.2s; z-index: 2; }
+    .photo-card:hover .photo-actions { opacity: 1; }
+    .icon-btn { background: rgba(15, 18, 22, 0.85); backdrop-filter: blur(6px); border: none; color: white; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.15s; font-size: 0.9rem; }
+    .icon-btn:hover { background: #c084fc; color: #0b0d10; }
+    .icon-btn.delete-photo:hover { background: #f43f5e; color: white; }
+
+    /* ---------- LIKE + RATING ROW ---------- */
+    .photo-like-row { display: flex; align-items: center; justify-content: space-between; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(255, 255, 255, 0.05); gap: 0.8rem; flex-wrap: wrap; }
+    .like-btn { background: transparent; border: none; color: #b0b8c5; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.9rem; padding: 0.35rem 0.8rem; border-radius: 30px; transition: 0.15s; font-weight: 500; }
+    .like-btn i { font-size: 1.1rem; transition: 0.15s; }
+    .like-btn:hover { background: rgba(192, 132, 252, 0.1); color: #c084fc; }
+    .like-btn.liked { color: #f43f5e; }
+    .like-btn.liked i { color: #f43f5e; font-weight: 900; }
+    .like-count { font-weight: 500; font-size: 0.9rem; color: #9aa3b2; display: flex; align-items: center; gap: 0.3rem; }
+    .like-count i { color: #f43f5e; font-size: 0.8rem; }
+    .rating-display { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: #fbbf24; font-weight: 500; }
+    .rating-display i { font-size: 0.85rem; }
+    .rating-display span { color: #9aa3b2; font-weight: 400; font-size: 0.8rem; }
+
+    /* ---------- PHOTO INFO ---------- */
+    .photo-info { padding: 1.2rem 1.2rem 1.4rem; }
+    .photo-title { font-weight: 500; font-size: 1.2rem; margin-bottom: 0.25rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .photo-title i { color: #c084fc; font-size: 0.9rem; opacity: 0.7; }
+    .photo-meta { font-size: 0.8rem; color: #9aa3b2; display: flex; gap: 1rem; margin-top: 0.3rem; flex-wrap: wrap; }
+    .photo-meta span i { font-size: 0.7rem; margin-right: 0.3rem; color: #c084fc; }
+
+    /* ---------- COMMENTS SECTION ---------- */
+    .comments-section { margin-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 1rem; }
+    .comments-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; cursor: pointer; user-select: none; }
+    .comments-header-left { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #b0b8c5; font-weight: 500; }
+    .comments-header-left i { color: #c084fc; font-size: 0.9rem; }
+    .comments-header-left .comment-count-badge { background: rgba(192, 132, 252, 0.15); color: #c084fc; font-size: 0.7rem; padding: 0.1rem 0.5rem; border-radius: 20px; font-weight: 600; }
+    .comments-toggle-icon { color: #9aa3b2; font-size: 0.75rem; transition: transform 0.2s; }
+    .comments-section.expanded .comments-toggle-icon { transform: rotate(180deg); }
+    .comments-body { display: none; }
+    .comments-section.expanded .comments-body { display: block; }
+
+    .rate-photo { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; padding: 0.6rem 0.8rem; background: #1a2028; border-radius: 12px; flex-wrap: wrap; }
+    .rate-photo-label { font-size: 0.8rem; color: #9aa3b2; }
+    .star-picker { display: flex; gap: 0.15rem; }
+    .star-picker i { font-size: 1.3rem; color: #4a5262; cursor: pointer; transition: 0.15s; }
+    .star-picker i:hover, .star-picker i.active { color: #fbbf24; transform: scale(1.1); }
+    .star-picker i.hovered { color: #fbbf24; }
+    .rate-thanks { font-size: 0.75rem; color: #4ade80; margin-left: auto; }
+
+    .comment-form { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+    .comment-input-row { display: flex; gap: 0.5rem; }
+    .comment-name-input, .comment-text-input { background: #1a2028; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 0.6rem 0.9rem; color: white; font-size: 0.85rem; outline: none; transition: 0.2s; font-family: inherit; }
+    .comment-name-input { width: 30%; min-width: 100px; }
+    .comment-text-input { flex: 1; resize: vertical; min-height: 38px; max-height: 120px; }
+    .comment-name-input:focus, .comment-text-input:focus { border-color: #c084fc; }
+    .comment-submit-row { display: flex; justify-content: flex-end; gap: 0.5rem; align-items: center; }
+    .comment-submit-btn { background: #c084fc; color: #0b0d10; border: none; padding: 0.5rem 1.2rem; border-radius: 30px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .comment-submit-btn:hover { background: #b16eff; }
+    .comment-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .comment-char-count { font-size: 0.7rem; color: #5a6377; }
+
+    .comment-list { display: flex; flex-direction: column; gap: 0.7rem; max-height: 280px; overflow-y: auto; padding-right: 0.3rem; }
+    .comment-list::-webkit-scrollbar { width: 6px; }
+    .comment-list::-webkit-scrollbar-track { background: transparent; }
+    .comment-list::-webkit-scrollbar-thumb { background: #2a3040; border-radius: 6px; }
+    .comment-item { background: #1a2028; border-radius: 12px; padding: 0.7rem 0.9rem; position: relative; }
+    .comment-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; gap: 0.5rem; }
+    .comment-author { font-weight: 600; font-size: 0.82rem; color: #c084fc; display: flex; align-items: center; gap: 0.4rem; }
+    .comment-author i { font-size: 0.7rem; opacity: 0.7; }
+    .comment-date { font-size: 0.7rem; color: #5a6377; }
+    .comment-text { font-size: 0.85rem; color: #d1d7e0; line-height: 1.5; word-break: break-word; }
+    .comment-delete-btn { background: transparent; border: none; color: #5a6377; cursor: pointer; font-size: 0.75rem; padding: 0.2rem 0.4rem; border-radius: 6px; transition: 0.15s; }
+    .comment-delete-btn:hover { color: #f43f5e; background: rgba(244, 63, 94, 0.1); }
+    .no-comments { font-size: 0.8rem; color: #5a6377; text-align: center; padding: 1rem 0; font-style: italic; }
+    .comment-loading { font-size: 0.8rem; color: #5a6377; text-align: center; padding: 0.5rem 0; }
+
+    /* ---------- EMPTY / LOADING STATES ---------- */
+    .empty-state { grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: #14181f; border-radius: 24px; border: 1px dashed rgba(255, 255, 255, 0.1); }
+    .empty-state i { font-size: 3rem; color: #c084fc; opacity: 0.5; margin-bottom: 1rem; }
+    .empty-state h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+    .empty-state p { color: #9aa3b2; font-size: 0.9rem; }
+    .loading-state { grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; }
+    .loading-state i { font-size: 2.5rem; color: #c084fc; opacity: 0.7; margin-bottom: 1rem; animation: spin 1s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---------- MODALS ---------- */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-box { background: #12171e; border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 36px; padding: 2.5rem 2rem; width: 90%; max-width: 420px; box-shadow: 0 40px 70px -20px black; transform: scale(0.95); transition: transform 0.2s; max-height: 90vh; overflow-y: auto; }
+    .modal-overlay.active .modal-box { transform: scale(1); }
+    .modal-box h3 { font-size: 1.6rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .modal-box p { color: #9aa3b2; margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .input-group { margin-bottom: 1.2rem; }
+    .input-group label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: #9aa3b2; margin-bottom: 0.4rem; }
+    .input-group input { width: 100%; background: #1a2028; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; padding: 0.85rem 1.2rem; color: white; font-size: 0.95rem; outline: none; transition: 0.2s; }
+    .input-group input:focus { border-color: #c084fc; }
+    .modal-actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+    .modal-actions .btn { flex: 1; justify-content: center; }
+    .modal-error { font-size: 0.8rem; color: #f87171; margin-top: 0.8rem; text-align: center; min-height: 1.2rem; }
+    .modal-success { font-size: 0.85rem; color: #4ade80; margin-top: 0.8rem; text-align: center; }
+    .modal-info { font-size: 0.75rem; color: #5a6377; margin-top: 1rem; text-align: center; line-height: 1.4; }
+    .modal-divider { display: flex; align-items: center; gap: 0.8rem; margin: 1.2rem 0; color: #5a6377; font-size: 0.75rem; }
+    .modal-divider::before, .modal-divider::after { content: ''; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.08); }
+    .password-strength { height: 4px; border-radius: 4px; background: #1a2028; margin-top: 0.5rem; overflow: hidden; }
+    .password-strength-bar { height: 100%; width: 0; transition: 0.3s; border-radius: 4px; }
+    .strength-weak { background: #f87171; width: 33%; }
+    .strength-medium { background: #fbbf24; width: 66%; }
+    .strength-strong { background: #4ade80; width: 100%; }
+    .email-highlight { color: #c084fc; font-weight: 600; word-break: break-all; }
+
+    /* ---------- DELETE CONFIRM MODAL ---------- */
+    .delete-preview { display: flex; align-items: center; gap: 1rem; background: #1a2028; border-radius: 16px; padding: 0.8rem; margin-bottom: 1.5rem; }
+    .delete-preview img { width: 60px; height: 60px; object-fit: cover; border-radius: 12px; flex-shrink: 0; }
+    .delete-preview .delete-info { flex: 1; min-width: 0; }
+    .delete-preview .delete-info strong { display: block; font-size: 0.95rem; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .delete-preview .delete-info span { font-size: 0.75rem; color: #9aa3b2; }
+    .delete-warning { background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 12px; padding: 0.8rem; margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.6rem; }
+    .delete-warning i { color: #f43f5e; font-size: 1rem; margin-top: 0.1rem; }
+    .delete-warning span { font-size: 0.8rem; color: #fca5a5; }
+
+    /* ---------- UPLOAD MODAL ---------- */
+    .upload-zone { background: #1a2028; border: 2px dashed rgba(192, 132, 252, 0.4); border-radius: 20px; padding: 2rem 1.5rem; text-align: center; cursor: pointer; transition: 0.2s; margin-bottom: 1.2rem; }
+    .upload-zone:hover, .upload-zone.dragover { background: rgba(192, 132, 252, 0.08); border-color: #c084fc; }
+    .upload-zone i { font-size: 2.5rem; color: #c084fc; margin-bottom: 0.8rem; display: block; }
+    .upload-zone strong { display: block; font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .upload-zone span { font-size: 0.8rem; color: #9aa3b2; }
+    .upload-preview { margin-top: 1rem; }
+    .upload-preview img { max-width: 100%; max-height: 200px; border-radius: 12px; display: block; margin: 0 auto; }
+    .upload-progress { height: 6px; background: #1a2028; border-radius: 6px; overflow: hidden; margin-top: 1rem; display: none; }
+    .upload-progress.active { display: block; }
+    .upload-progress-bar { height: 100%; background: #c084fc; width: 0%; transition: width 0.2s; border-radius: 6px; }
+    .upload-status { font-size: 0.8rem; text-align: center; margin-top: 0.6rem; color: #9aa3b2; min-height: 1.2rem; }
+
+    /* ---------- TOAST ---------- */
+    .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #c084fc; color: #0b0d10; font-weight: 600; padding: 0.9rem 2.2rem; border-radius: 60px; box-shadow: 0 20px 40px -10px black; transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2); z-index: 1100; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; pointer-events: none; opacity: 0; max-width: 90vw; }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ---------- ADMIN BADGE ---------- */
+    .admin-badge { background: rgba(192, 132, 252, 0.2); border: 1px solid #c084fc; color: #c084fc; font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.9rem; border-radius: 40px; letter-spacing: 0.3px; display: inline-flex; align-items: center; gap: 0.3rem; }
+
+    /* ---------- FOOTER ---------- */
+    .footer-dash { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.85rem; color: #7b8598; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-socials { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .footer-socials .whatsapp-btn { display: inline-flex; align-items: center; gap: 0.6rem; background: #25D366; color: white; text-decoration: none; padding: 0.75rem 1.5rem; border-radius: 40px; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; box-shadow: 0 6px 20px -8px rgba(37, 211, 102, 0.5); border: 1px solid transparent; }
+    .footer-socials .whatsapp-btn i { color: white; font-size: 1.25rem; }
+    .footer-socials .whatsapp-btn:hover { background: #1da851; transform: translateY(-2px); box-shadow: 0 10px 25px -8px rgba(37, 211, 102, 0.7); }
+    .footer-socials .whatsapp-btn.invalid { background: #6b7280; cursor: not-allowed; box-shadow: none; }
+    .footer-socials .whatsapp-btn.invalid:hover { background: #6b7280; transform: none; box-shadow: none; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 750px) {
+      body { padding: 0 1.2rem 2rem; }
+      .dashboard-header h1 { font-size: 2rem; }
+      .stats { padding: 0.6rem 1.2rem; gap: 1rem; }
+      .stat-number { font-size: 1rem; }
+      .edit-bar { border-radius: 30px; padding: 1rem 1.2rem; flex-direction: column; align-items: stretch; }
+      .edit-actions { justify-content: center; }
+      .navbar { flex-direction: column; align-items: flex-start; }
+      .nav-links { width: 100%; justify-content: space-between; flex-wrap: wrap; }
+      .photo-grid { gap: 1rem; }
+      .footer-dash { flex-direction: column; text-align: center; }
+      .footer-socials { justify-content: center; }
+      .comment-name-input { width: 100%; }
+      .comment-input-row { flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .stats { flex-wrap: wrap; gap: 0.8rem; border-radius: 30px; }
+      .photo-title { font-size: 1rem; }
+      .star-picker i { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar">
+    <div class="logo"><i class="fas fa-camera-retro"></i> LUMINA</div>
+    <div class="nav-links">
+      <a href="#" class="active"><i class="fas fa-compass"></i> Portfolio</a>
+    </div>
+    <div style="display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap;">
+      <span id="connStatus" class="conn-status" title="Backend connection status">
+        <span class="conn-dot" id="connDot"></span>
+        <span id="connText">Connecting…</span>
+      </span>
+      <span id="adminBadgeContainer" style="display: none;"><span class="admin-badge"><i class="fas fa-shield-alt"></i> ADMIN</span></span>
+      <button class="btn btn-primary" id="loginToggleBtn" type="button"><i class="fas fa-sign-in-alt"></i> Admin login</button>
+    </div>
+  </nav>
+
+  <!-- ========== DASHBOARD HEADER ========== -->
+  <div class="dashboard-header">
+    <div>
+      <h1>My <span>visual</span> diary</h1>
+      <p style="color: #9aa3b2; margin-top: 0.3rem;">curated shots · edits · stories</p>
+    </div>
+    <div class="stats">
+      <div class="stat-item"><i class="fas fa-images"></i><div><span class="stat-number" id="photoCount">0</span><span class="stat-label">photos</span></div></div>
+      <div class="stat-item"><i class="fas fa-heart" style="color: #f43f5e;"></i><div><span class="stat-number" id="totalLikes">0</span><span class="stat-label">likes</span></div></div>
+      <div class="stat-item"><i class="fas fa-star" style="color: #fbbf24;"></i><div><span class="stat-number" id="avgRating">0.0</span><span class="stat-label">avg rating</span></div></div>
+      <div class="stat-item"><i class="fas fa-comment"></i><div><span class="stat-number" id="totalComments">0</span><span class="stat-label">comments</span></div></div>
+    </div>
+  </div>
+
+  <!-- ========== ADMIN EDIT BAR ========== -->
+  <div class="edit-bar hidden" id="adminEditBar">
+    <div class="edit-label"><i class="fas fa-sliders-h"></i><span>admin · edit & add</span></div>
+    <div class="edit-actions">
+      <button class="pill-btn" id="addPhotoBtn" type="button"><i class="fas fa-cloud-upload-alt"></i> Add photo</button>
+      <button class="pill-btn" id="refreshBtn" type="button"><i class="fas fa-sync"></i> Refresh</button>
+      <button class="pill-btn" id="logoutBtn2" type="button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+
+  <!-- ========== GALLERY HEADER ========== -->
+  <div class="gallery-header">
+    <h2><i class="fas fa-th"></i> Recent work</h2>
+  </div>
+
+  <!-- ========== PHOTO GRID ========== -->
+  <div class="photo-grid" id="photoGrid">
+    <div class="loading-state"><i class="fas fa-circle-notch"></i><p>Loading photos…</p></div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <div class="footer-dash">
+    <div>© 2025 LUMINA · photography portfolio · <span style="color: #38bdf8;">Cloudinary + Supabase</span></div>
+    <div class="footer-socials" id="footerSocials">
+      <a href="#" class="whatsapp-btn" id="whatsappContactBtn" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i> <span id="whatsappBtnText">Chat on WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ========== LOGIN MODAL ========== -->
+<div class="modal-overlay" id="loginModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <h3><i class="fas fa-lock" style="color: #c084fc;"></i> Admin access</h3>
+    <p>Enter your credentials to manage the portfolio.</p>
+    <div class="input-group">
+      <label for="emailInput">Email</label>
+      <input type="email" id="emailInput" placeholder="briankipkoech000@gmail.com" autocomplete="username" maxlength="254">
+    </div>
+    <div class="input-group">
+      <label for="passwordInput">Password</label>
+      <input type="password" id="passwordInput" placeholder="Enter password" autocomplete="current-password" maxlength="128">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="cancelLoginBtn" type="button">Cancel</button>
+      <button class="btn btn-primary" id="submitLoginBtn" type="button">Login</button>
+    </div>
+    <div class="modal-divider">or</div>
+    <button class="btn-link" id="forgotPasswordBtn" type="button" style="width: 100%; text-align: center;">Forgot password?</button>
+    <div class="modal-error" id="loginError"></div>
+    <div class="modal-info">Only the admin can log in. Visitors can view and interact with photos.</div>
+  </div>
+</div>
+
+<!-- ========== FIRST-TIME SETUP MODAL ========== -->
+<div class="modal-overlay" id="setupModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <h3><i class="fas fa-user-shield" style="color: #c084fc;"></i> First-time setup</h3>
+    <p>No admin account exists yet. Create your admin account now. This can only be done once.</p>
+    <div class="input-group">
+      <label for="setupEmailInput">Admin email</label>
+      <input type="email" id="setupEmailInput" placeholder="briankipkoech000@gmail.com" maxlength="254">
+    </div>
+    <div class="input-group">
+      <label for="setupPasswordInput">Password</label>
+      <input type="password" id="setupPasswordInput" placeholder="Min 8, upper, lower, number, symbol" maxlength="128">
+      <div class="password-strength"><div class="password-strength-bar" id="setupPasswordStrengthBar"></div></div>
+    </div>
+    <div class="input-group">
+      <label for="setupConfirmInput">Confirm password</label>
+      <input type="password" id="setupConfirmInput" placeholder="Re-enter password" maxlength="128">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="cancelSetupBtn" type="button">Cancel</button>
+      <button class="btn btn-primary" id="submitSetupBtn" type="button">Create admin</button>
+    </div>
+    <div class="modal-error" id="setupError"></div>
+    <div class="modal-success" id="setupSuccess"></div>
+  </div>
+</div>
+
+<!-- ========== FORGOT PASSWORD MODAL ========== -->
+<div class="modal-overlay" id="forgotModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <h3><i class="fas fa-envelope" style="color: #c084fc;"></i> Reset password</h3>
+    <p>Enter the admin email. A reset link will be sent (only to the registered admin email).</p>
+    <div class="input-group">
+      <label for="resetEmailInput">Admin email</label>
+      <input type="email" id="resetEmailInput" placeholder="briankipkoech000@gmail.com" maxlength="254">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="cancelForgotBtn" type="button">Cancel</button>
+      <button class="btn btn-primary" id="sendResetBtn" type="button">Send link</button>
+    </div>
+    <div class="modal-error" id="forgotError"></div>
+    <div class="modal-success" id="forgotSuccess"></div>
+    <div class="modal-info">If Resend is configured, you'll get a real email. Otherwise check the backend console.</div>
+  </div>
+</div>
+
+<!-- ========== DELETE CONFIRM MODAL ========== -->
+<div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <h3><i class="fas fa-exclamation-triangle" style="color: #f43f5e;"></i> Delete photo?</h3>
+    <p>This will remove the photo from the database and from Cloudinary.</p>
+    <div class="delete-preview" id="deletePreview">
+      <img id="deletePreviewImg" src="" alt="Photo preview">
+      <div class="delete-info">
+        <strong id="deletePreviewTitle">Title</strong>
+        <span id="deletePreviewMeta">Location · Date</span>
+      </div>
+    </div>
+    <div class="delete-warning">
+      <i class="fas fa-info-circle"></i>
+      <span>This action is permanent. Likes, ratings, and comments for this photo will also be removed.</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="cancelDeleteBtn" type="button">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn" type="button"><i class="fas fa-trash-alt"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== UPLOAD MODAL ========== -->
+<div class="modal-overlay" id="uploadModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <h3><i class="fas fa-cloud-upload-alt" style="color: #38bdf8;"></i> Upload photo</h3>
+    <p>Select a photo. It uploads directly to your Cloudinary account using a signed request from the backend.</p>
+    <div class="input-group">
+      <label for="uploadTitleInput">Title</label>
+      <input type="text" id="uploadTitleInput" placeholder="e.g. Golden Hour" maxlength="100">
+    </div>
+    <div class="input-group">
+      <label for="uploadLocationInput">Location (optional)</label>
+      <input type="text" id="uploadLocationInput" placeholder="e.g. Santorini, GR" maxlength="100">
+    </div>
+    <div class="upload-zone" id="uploadZone">
+      <i class="fas fa-cloud-upload-alt"></i>
+      <strong>Click to choose a photo</strong>
+      <span>or drag & drop · JPG, PNG, WEBP, GIF · max 10MB</span>
+      <input type="file" id="uploadFileInput" accept="image/*" style="display: none;">
+    </div>
+    <div class="upload-preview" id="uploadPreview"></div>
+    <div class="upload-progress" id="uploadProgress">
+      <div class="upload-progress-bar" id="uploadProgressBar"></div>
+    </div>
+    <div class="upload-status" id="uploadStatus"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="cancelUploadBtn" type="button">Cancel</button>
+      <button class="btn btn-primary" id="confirmUploadBtn" type="button" disabled><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TOAST ========== -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <i class="fas fa-check-circle"></i> <span id="toastMsg">Ready</span>
+</div>
+
+<script>
+  // ============================================================
+  //  LUMINA FRONTEND — Backend-powered portfolio
+  // ============================================================
+  (function() {
+    'use strict';
+
+    // ============================================================
+    //  ⚙️ CONFIGURATION
+    // ============================================================
+    const API_BASE = 'https://luminabackend-inky.vercel.app';
+    const WHATSAPP_NUMBER = '254712345678';  // ← your WhatsApp number
+    const WHATSAPP_MESSAGE = 'Hello';
+
+    // ============================================================
+    //  STATE
+    // ============================================================
+    let isAdmin = false;
+    let photos = [];
+    let pendingDeleteId = null;
+    let pendingUploadFile = null;
+    let toastTimeout;
+
+    // ============================================================
+    //  HELPERS
+    // ============================================================
+    function escapeHTML(str) {
+      if (typeof str !== 'string') return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;');
+    }
+    function isSafeImageURL(url) {
+      if (typeof url !== 'string') return false;
+      const t = url.trim().toLowerCase();
+      if (t.startsWith('blob:')) return true;
+      if (t.startsWith('data:image/')) return true;
+      try {
+        const p = new URL(t, window.location.origin);
+        return p.protocol === 'http:' || p.protocol === 'https:';
+      } catch { return false; }
+    }
+    function placeholderImage() {
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">' +
+        '<rect width="100%" height="100%" fill="#1e232b"/>' +
+        '<text x="50%" y="50%" fill="#5a6377" font-family="sans-serif" font-size="16" text-anchor="middle">Image unavailable</text>' +
+        '</svg>'
+      );
+    }
+    function formatRelativeTime(iso) {
+      if (!iso) return 'just now';
+      const diff = Date.now() - new Date(iso).getTime();
+      const sec = Math.floor(diff / 1000);
+      if (sec < 60) return 'just now';
+      const min = Math.floor(sec / 60);
+      if (min < 60) return min + 'm ago';
+      const hr = Math.floor(min / 60);
+      if (hr < 24) return hr + 'h ago';
+      const day = Math.floor(hr / 24);
+      if (day < 30) return day + 'd ago';
+      const month = Math.floor(day / 30);
+      if (month < 12) return month + 'mo ago';
+      return Math.floor(month / 12) + 'y ago';
+    }
+    function toast(msg, ok = true) {
+      const el = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      el.style.background = ok ? '#c084fc' : '#f87171';
+      el.style.color = ok ? '#0b0d10' : 'white';
+      el.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => el.classList.remove('show'), 3200);
+    }
+
+    // ============================================================
+    //  API WRAPPER — sends Bearer token + cookie
+    // ============================================================
+    async function api(path, options = {}) {
+      const url = API_BASE + path;
+      const token = sessionStorage.getItem('lumina_token');
+      const headers = {
+        'Content-Type': 'application/json',
+        ...(options.headers || {})
+      };
+      if (token) {
+        headers['Authorization'] = 'Bearer ' + token;
+      }
+      const opts = {
+        ...options,
+        headers,
+        credentials: 'include'   // keep cookie fallback
+      };
+      if (opts.body && typeof opts.body === 'object') {
+        opts.body = JSON.stringify(opts.body);
+      }
+      const res = await fetch(url, opts);
+      let data = {};
+      try { data = await res.json(); } catch {}
+      if (!res.ok) {
+        const err = new Error(data.error || ('HTTP ' + res.status));
+        err.status = res.status;
+        err.data = data;
+        throw err;
+      }
+      return data;
+    }
+
+    // ============================================================
+    //  CONNECTION STATUS
+    // ============================================================
+    async function checkBackendHealth() {
+      const dot = document.getElementById('connDot');
+      const text = document.getElementById('connText');
+      try {
+        await api('/api/health');
+        dot.className = 'conn-dot online';
+        text.textContent = 'Connected';
+      } catch (err) {
+        dot.className = 'conn-dot offline';
+        text.textContent = 'Offline';
+        console.error('Backend unreachable:', err);
+      }
+    }
+
+    // ============================================================
+    //  AUTH
+    // ============================================================
+    async function checkSession() {
+      const token = sessionStorage.getItem('lumina_token');
+      if (!token) {
+        isAdmin = false;
+        updateAdminUI();
+        return;
+      }
+      try {
+        await api('/api/auth/me');
+        isAdmin = true;
+      } catch (err) {
+        sessionStorage.removeItem('lumina_token');
+        isAdmin = false;
+      }
+      updateAdminUI();
+    }
+
+    async function checkAdminExists() {
+      try {
+        const { adminExists } = await api('/api/auth/status');
+        return adminExists;
+      } catch { return true; }
+    }
+
+    async function performLogin() {
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+      const errEl = document.getElementById('loginError');
+      errEl.textContent = '';
+
+      if (!email || !password) {
+        errEl.textContent = 'Please fill in both fields.';
+        return;
+      }
+      try {
+        const loginData = await api('/api/auth/login', { method: 'POST', body: { email, password } });
+        if (loginData.token) {
+          sessionStorage.setItem('lumina_token', loginData.token);
+          console.log('✅ Token saved to sessionStorage');
+        }
+        isAdmin = true;
+        closeModal('loginModal');
+        document.getElementById('passwordInput').value = '';
+        updateAdminUI();
+        toast('🔓 Welcome, admin!');
+        loadPhotos();
+      } catch (err) {
+        errEl.textContent = err.message || 'Login failed';
+      }
+    }
+
+    async function performLogout() {
+      try { await api('/api/auth/logout', { method: 'POST' }); } catch {}
+      sessionStorage.removeItem('lumina_token');
+      isAdmin = false;
+      updateAdminUI();
+      toast('👋 Logged out');
+    }
+
+    async function performSetup() {
+      const email = document.getElementById('setupEmailInput').value.trim();
+      const password = document.getElementById('setupPasswordInput').value;
+      const confirm = document.getElementById('setupConfirmInput').value;
+      const errEl = document.getElementById('setupError');
+      const okEl = document.getElementById('setupSuccess');
+      errEl.textContent = '';
+      okEl.textContent = '';
+
+      if (!email || !password || !confirm) { errEl.textContent = 'Please fill all fields.'; return; }
+      if (password !== confirm) { errEl.textContent = 'Passwords do not match.'; return; }
+      if (password.length < 8) { errEl.textContent = 'Password too short.'; return; }
+
+      try {
+        await api('/api/auth/setup', { method: 'POST', body: { email, password } });
+        okEl.textContent = '✅ Admin created! You can now log in.';
+        setTimeout(() => {
+          closeModal('setupModal');
+          openModal('loginModal');
+        }, 1200);
+      } catch (err) {
+        errEl.textContent = err.message || 'Setup failed';
+      }
+    }
+
+    async function performForgotPassword() {
+      const email = document.getElementById('resetEmailInput').value.trim();
+      const errEl = document.getElementById('forgotError');
+      const okEl = document.getElementById('forgotSuccess');
+      errEl.textContent = '';
+      okEl.textContent = '';
+
+      if (!email) { errEl.textContent = 'Please enter your email.'; return; }
+
+      try {
+        const res = await api('/api/auth/request-reset', { method: 'POST', body: { email } });
+        okEl.textContent = res.message || 'If that email is registered, a link was sent.';
+        document.getElementById('resetEmailInput').value = '';
+      } catch (err) {
+        errEl.textContent = err.message || 'Request failed';
+      }
+    }
+
+    // ============================================================
+    //  PHOTOS
+    // ============================================================
+    async function loadPhotos() {
+      try {
+        const { photos: list } = await api('/api/photos');
+        photos = list || [];
+        renderGallery();
+      } catch (err) {
+        document.getElementById('photoGrid').innerHTML =
+          '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Could not load photos</h3><p>' + escapeHTML(err.message) + '</p></div>';
+      }
+    }
+
+    function renderGallery() {
+      const grid = document.getElementById('photoGrid');
+      grid.textContent = '';
+
+      if (photos.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.innerHTML = '<i class="fas fa-camera"></i><h3>No photos yet</h3><p>' +
+          (isAdmin ? 'Click "Add photo" to upload your first shot.' : 'Check back soon.') + '</p>';
+        grid.appendChild(empty);
+        updateStats();
+        return;
+      }
+
+      photos.forEach(photo => {
+        grid.appendChild(buildPhotoCard(photo));
+      });
+      updateStats();
+    }
+
+    function buildPhotoCard(photo) {
+      const card = document.createElement('div');
+      card.className = 'photo-card';
+      card.dataset.id = photo.id;
+
+      // ---- THUMB ----
+      const thumb = document.createElement('div');
+      thumb.className = 'photo-thumb';
+      const img = document.createElement('img');
+      img.alt = escapeHTML(photo.title);
+      img.loading = 'lazy';
+      img.src = isSafeImageURL(photo.img_url || photo.image_url)
+        ? (photo.img_url || photo.image_url)
+        : placeholderImage();
+      thumb.appendChild(img);
+
+      if (isAdmin) {
+        const actions = document.createElement('div');
+        actions.className = 'photo-actions';
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'icon-btn delete-photo';
+        delBtn.title = 'Delete';
+        delBtn.dataset.id = photo.id;
+        delBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        actions.appendChild(delBtn);
+        thumb.appendChild(actions);
+      }
+      card.appendChild(thumb);
+
+      // ---- INFO ----
+      const info = document.createElement('div');
+      info.className = 'photo-info';
+
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'photo-title';
+      titleDiv.textContent = photo.title;
+      info.appendChild(titleDiv);
+
+      const meta = document.createElement('div');
+      meta.className = 'photo-meta';
+      if (photo.location) {
+        const loc = document.createElement('span');
+        loc.innerHTML = '<i class="fas fa-map-pin"></i> ' + escapeHTML(photo.location);
+        meta.appendChild(loc);
+      }
+      if (photo.date) {
+        const dt = document.createElement('span');
+        dt.innerHTML = '<i class="fas fa-calendar-alt"></i> ' + escapeHTML(photo.date);
+        meta.appendChild(dt);
+      }
+      info.appendChild(meta);
+
+      // ---- LIKE + RATING ROW ----
+      const likeRow = document.createElement('div');
+      likeRow.className = 'photo-like-row';
+
+      const likeBtn = document.createElement('button');
+      likeBtn.type = 'button';
+      likeBtn.className = 'like-btn';
+      likeBtn.dataset.id = photo.id;
+      likeBtn.innerHTML = '<i class="far fa-heart"></i> <span>Like</span>';
+
+      const likeCount = document.createElement('span');
+      likeCount.className = 'like-count';
+      likeCount.innerHTML = '<i class="fas fa-heart"></i> <span class="like-number">' + escapeHTML(String(photo.likes || 0)) + '</span>';
+
+      const ratingsCount = photo.ratings_count || 0;
+      const ratingsSum = photo.ratings_sum || 0;
+      const avg = ratingsCount > 0 ? (ratingsSum / ratingsCount) : 0;
+      const ratingDisplay = document.createElement('div');
+      ratingDisplay.className = 'rating-display';
+      ratingDisplay.innerHTML = '<i class="fas fa-star"></i> ' + avg.toFixed(1) +
+        ' <span>(' + ratingsCount + ')</span>';
+
+      likeRow.appendChild(likeBtn);
+      likeRow.appendChild(likeCount);
+      likeRow.appendChild(ratingDisplay);
+      info.appendChild(likeRow);
+
+      // ---- COMMENTS SECTION ----
+      const commentsSection = document.createElement('div');
+      commentsSection.className = 'comments-section';
+      commentsSection.dataset.id = photo.id;
+
+      const commentsHeader = document.createElement('div');
+      commentsHeader.className = 'comments-header';
+      commentsHeader.innerHTML =
+        '<div class="comments-header-left">' +
+          '<i class="fas fa-comments"></i>' +
+          '<span>Comments</span>' +
+          '<span class="comment-count-badge">' + (photo.comments_count || 0) + '</span>' +
+        '</div>' +
+        '<i class="fas fa-chevron-down comments-toggle-icon"></i>';
+
+      const commentsBody = document.createElement('div');
+      commentsBody.className = 'comments-body';
+
+      // Rating picker
+      const rateRow = document.createElement('div');
+      rateRow.className = 'rate-photo';
+      rateRow.innerHTML = '<span class="rate-photo-label">Rate this photo:</span>';
+      const starPicker = document.createElement('div');
+      starPicker.className = 'star-picker';
+      starPicker.dataset.photoId = photo.id;
+      for (let s = 1; s <= 5; s++) {
+        const star = document.createElement('i');
+        star.className = 'far fa-star';
+        star.dataset.value = String(s);
+        starPicker.appendChild(star);
+      }
+      const rateThanks = document.createElement('span');
+      rateThanks.className = 'rate-thanks';
+      rateThanks.style.display = 'none';
+      rateThanks.textContent = '✓ Thanks!';
+      rateRow.appendChild(starPicker);
+      rateRow.appendChild(rateThanks);
+      commentsBody.appendChild(rateRow);
+
+      // Comment form
+      const form = document.createElement('div');
+      form.className = 'comment-form';
+      form.dataset.photoId = photo.id;
+      form.innerHTML =
+        '<div class="comment-input-row">' +
+          '<input type="text" class="comment-name-input" placeholder="Your name (optional)" maxlength="40">' +
+        '</div>' +
+        '<div class="comment-input-row">' +
+          '<textarea class="comment-text-input" placeholder="Leave a comment..." maxlength="500" rows="2"></textarea>' +
+        '</div>' +
+        '<div class="comment-submit-row">' +
+          '<span class="comment-char-count">0/500</span>' +
+          '<button type="button" class="comment-submit-btn"><i class="fas fa-paper-plane"></i> Post</button>' +
+        '</div>';
+      commentsBody.appendChild(form);
+
+      // Comment list (loaded lazily)
+      const list = document.createElement('div');
+      list.className = 'comment-list';
+      list.dataset.photoId = photo.id;
+      list.innerHTML = '<div class="comment-loading">Open to load comments…</div>';
+      commentsBody.appendChild(list);
+
+      commentsSection.appendChild(commentsHeader);
+      commentsSection.appendChild(commentsBody);
+      info.appendChild(commentsSection);
+      card.appendChild(info);
+
+      // Toggle: expand + lazy-load comments the first time
+      let commentsLoaded = false;
+      commentsHeader.addEventListener('click', async () => {
+        const expanded = commentsSection.classList.toggle('expanded');
+        if (expanded && !commentsLoaded) {
+          commentsLoaded = true;
+          await loadCommentsForPhoto(photo.id);
+        }
+      });
+
+      return card;
+    }
+
+    // ============================================================
+    //  COMMENTS
+    // ============================================================
+    async function loadCommentsForPhoto(photoId) {
+      const list = document.querySelector('.comment-list[data-photo-id="' + photoId + '"]');
+      if (!list) return;
+      list.innerHTML = '<div class="comment-loading">Loading…</div>';
+      try {
+        const { comments } = await api('/api/comments/photo/' + photoId);
+        renderCommentList(list, comments || []);
+      } catch (err) {
+        list.innerHTML = '<div class="comment-loading">Could not load comments</div>';
+      }
+    }
+
+    function renderCommentList(listEl, comments) {
+      listEl.textContent = '';
+      if (comments.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'no-comments';
+        empty.textContent = 'No comments yet — be the first!';
+        listEl.appendChild(empty);
+        return;
+      }
+      comments.forEach(c => listEl.appendChild(buildCommentItem(c)));
+    }
+
+    function buildCommentItem(comment) {
+      const item = document.createElement('div');
+      item.className = 'comment-item';
+      item.dataset.commentId = comment.id;
+
+      const header = document.createElement('div');
+      header.className = 'comment-item-header';
+
+      const author = document.createElement('span');
+      author.className = 'comment-author';
+      author.innerHTML = '<i class="fas fa-user-circle"></i> ' + escapeHTML(comment.author_name || 'Anonymous');
+
+      const meta = document.createElement('div');
+      meta.style.display = 'flex';
+      meta.style.alignItems = 'center';
+      meta.style.gap = '0.5rem';
+
+      const date = document.createElement('span');
+      date.className = 'comment-date';
+      date.textContent = formatRelativeTime(comment.created_at);
+      meta.appendChild(date);
+
+      if (isAdmin) {
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'comment-delete-btn';
+        del.title = 'Delete comment';
+        del.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        del.addEventListener('click', (e) => {
+          e.stopPropagation();
+          deleteComment(comment.id);
+        });
+        meta.appendChild(del);
+      }
+
+      header.appendChild(author);
+      header.appendChild(meta);
+
+      const text = document.createElement('div');
+      text.className = 'comment-text';
+      text.textContent = comment.text || '';
+
+      item.appendChild(header);
+      item.appendChild(text);
+      return item;
+    }
+
+        async function submitComment(formEl) {
+      const photoId = formEl.dataset.photoId;
+      const nameInput = formEl.querySelector('.comment-name-input');
+      const textInput = formEl.querySelector('.comment-text-input');
+      const text = textInput.value.trim();
+      if (!text) { toast('✍️ Please write a comment first', false); return; }
+
+      const submitBtn = formEl.querySelector('.comment-submit-btn');
+      submitBtn.disabled = true;
+
+      const authorName = nameInput.value.trim() || 'Anonymous';
+
+      // ⚡ OPTIMISTIC: add the comment to the list immediately
+      const list = formEl.parentElement.querySelector('.comment-list');
+      const optimisticComment = {
+        id: 'temp_' + Date.now(),
+        author_name: authorName,
+        text: text,
+        created_at: new Date().toISOString()
+      };
+
+      if (list) {
+        // Remove "no comments yet" if present
+        const noComments = list.querySelector('.no-comments');
+        if (noComments) noComments.remove();
+
+        // Prepend the new comment
+        const item = buildCommentItem(optimisticComment);
+        list.insertBefore(item, list.firstChild);
+      }
+
+      // Update the comment count badge on this photo instantly
+      const photo = photos.find(p => String(p.id) === String(photoId));
+      const card = formEl.closest('.photo-card');
+      const badge = card?.querySelector('.comment-count-badge');
+      if (photo) {
+        photo.comments_count = (photo.comments_count || 0) + 1;
+        if (badge) badge.textContent = photo.comments_count;
+        updateStats();
+      }
+
+      // Clear the form immediately
+      textInput.value = '';
+      nameInput.value = '';
+      formEl.querySelector('.comment-char-count').textContent = '0/500';
+
+      // Send the request in the background
+      try {
+        const res = await api('/api/comments/photo/' + photoId, {
+          method: 'POST',
+          body: { author_name: authorName, text: text }
+        });
+
+        // Replace optimistic comment with the real one (has the server ID)
+        if (list && res.comment) {
+          const tempItem = list.querySelector('[data-comment-id="' + optimisticComment.id + '"]');
+          if (tempItem) {
+            const realItem = buildCommentItem(res.comment);
+            tempItem.replaceWith(realItem);
+          }
+        }
+
+        toast('💬 Comment posted!');
+      } catch (err) {
+        // ❌ ROLLBACK
+        if (list) {
+          const tempItem = list.querySelector('[data-comment-id="' + optimisticComment.id + '"]');
+          if (tempItem) tempItem.remove();
+          // Re-show "no comments yet" if list is now empty
+          if (list.children.length === 0) {
+            const empty = document.createElement('div');
+            empty.className = 'no-comments';
+            empty.textContent = 'No comments yet — be the first!';
+            list.appendChild(empty);
+          }
+        }
+        if (photo) {
+          photo.comments_count = Math.max(0, (photo.comments_count || 1) - 1);
+          if (badge) badge.textContent = photo.comments_count;
+          updateStats();
+        }
+        // Restore the comment text so they can retry
+        textInput.value = text;
+        nameInput.value = authorName === 'Anonymous' ? '' : authorName;
+        toast('❌ ' + err.message, false);
+      } finally {
+        submitBtn.disabled = false;
+      }
+    }
+
+    // ============================================================
+    //  RATINGS
+    // ============================================================
+       async function submitRating(photoId, stars, pickerEl, thanksEl) {
+      // ⚡ OPTIMISTIC: highlight stars instantly
+      const stars_ = pickerEl.querySelectorAll('i');
+      stars_.forEach((s, idx) => {
+        s.className = idx < stars ? 'fas fa-star active' : 'far fa-star';
+      });
+
+      // Show "thanks" immediately
+      thanksEl.style.display = 'inline';
+      setTimeout(() => { thanksEl.style.display = 'none'; }, 2500);
+
+      // Update the card's average rating instantly (best guess)
+      const photo = photos.find(p => String(p.id) === String(photoId));
+      const card = pickerEl.closest('.photo-card');
+      const ratingDisplay = card?.querySelector('.rating-display');
+
+      let oldCount = 0, oldSum = 0;
+      if (photo) {
+        oldCount = photo.ratings_count || 0;
+        oldSum = photo.ratings_sum || 0;
+        // Optimistic: treat as first rating (worst case, only slightly off)
+        photo.ratings_count = oldCount + 1;
+        photo.ratings_sum = oldSum + stars;
+      }
+
+      // Send the request in the background
+      try {
+        const res = await api('/api/ratings/photo/' + photoId, {
+          method: 'POST',
+          body: { stars }
+        });
+
+        // Server returns accurate avg + count — update if different
+        if (photo && res.count != null) {
+          photo.ratings_count = res.count;
+          photo.ratings_sum = Math.round(res.average * res.count);
+        }
+      } catch (err) {
+        // ❌ ROLLBACK
+        if (photo) {
+          photo.ratings_count = oldCount;
+          photo.ratings_sum = oldSum;
+        }
+        toast('❌ ' + err.message, false);
+      }
+
+      // Refresh just the rating display (no full gallery rebuild)
+      if (ratingDisplay && photo) {
+        const avg = photo.ratings_count > 0 ? (photo.ratings_sum / photo.ratings_count) : 0;
+        ratingDisplay.innerHTML = '<i class="fas fa-star"></i> ' + avg.toFixed(1) +
+          ' <span>(' + photo.ratings_count + ')</span>';
+      }
+      updateStats();
+
+      toast('⭐ Thanks for rating ' + stars + ' star' + (stars > 1 ? 's' : '') + '!');
+    }
+
+    // ============================================================
+    //  LIKES
+    // ============================================================
+       async function toggleLike(photoId, btnEl) {
+      // 1. Determine the new state from the current UI
+      const currentlyLiked = btnEl.classList.contains('liked');
+      const newLiked = !currentlyLiked;
+
+      // 2. Save old state for rollback if server fails
+      const photo = photos.find(p => String(p.id) === String(photoId));
+      const oldLikes = photo ? (photo.likes || 0) : 0;
+
+      // 3. ⚡ OPTIMISTIC: update UI instantly (before the request!)
+      const icon = btnEl.querySelector('i');
+      const label = btnEl.querySelector('span');
+      btnEl.classList.toggle('liked', newLiked);
+      icon.className = newLiked ? 'fas fa-heart' : 'far fa-heart';
+      label.textContent = newLiked ? 'Liked' : 'Like';
+
+      // Update the count on the card instantly
+      const card = btnEl.closest('.photo-card');
+      const likeNumber = card?.querySelector('.like-number');
+      const optimisticCount = Math.max(0, oldLikes + (newLiked ? 1 : -1));
+      if (likeNumber) likeNumber.textContent = optimisticCount;
+
+      // Update the in-memory photos array and stats bar
+      if (photo) {
+        photo.likes = optimisticCount;
+        photo._liked = newLiked;
+      }
+      updateStats();
+
+      // 4. Send the request in the background
+      try {
+        const res = await api('/api/likes/photo/' + photoId, { method: 'POST' });
+
+        // Server may have a different count if other users liked too
+        // Only update if it's meaningfully different
+        if (photo && typeof res.count === 'number' && res.count !== optimisticCount) {
+          photo.likes = res.count;
+          if (likeNumber) likeNumber.textContent = res.count;
+          updateStats();
+        }
+      } catch (err) {
+        // 5. ❌ ROLLBACK if the server rejected the request
+        btnEl.classList.toggle('liked', currentlyLiked);
+        icon.className = currentlyLiked ? 'fas fa-heart' : 'far fa-heart';
+        label.textContent = currentlyLiked ? 'Liked' : 'Like';
+        if (photo) {
+          photo.likes = oldLikes;
+          if (likeNumber) likeNumber.textContent = oldLikes;
+        }
+        updateStats();
+        toast('❌ ' + err.message, false);
+      }
+    }
+
+    // ============================================================
+    //  DELETE PHOTO
+    // ============================================================
+    function openDeleteModal(id) {
+      const photo = photos.find(p => p.id === id);
+      if (!photo) return;
+      pendingDeleteId = id;
+      const img = document.getElementById('deletePreviewImg');
+      img.src = isSafeImageURL(photo.img_url || photo.image_url)
+        ? (photo.img_url || photo.image_url)
+        : placeholderImage();
+      document.getElementById('deletePreviewTitle').textContent = photo.title;
+      document.getElementById('deletePreviewMeta').textContent =
+        (photo.location || 'No location') + ' · ' + (photo.date || '');
+      openModal('deleteModal');
+    }
+
+    async function confirmDelete() {
+      if (!pendingDeleteId) return;
+      const card = document.querySelector('.photo-card[data-id="' + pendingDeleteId + '"]');
+      if (card) card.classList.add('deleting');
+      try {
+        await api('/api/photos/' + pendingDeleteId, { method: 'DELETE' });
+        const t = photos.find(p => p.id === pendingDeleteId)?.title || 'Photo';
+        photos = photos.filter(p => p.id !== pendingDeleteId);
+        closeModal('deleteModal');
+        pendingDeleteId = null;
+        renderGallery();
+        toast('🗑️ "' + t + '" deleted', false);
+      } catch (err) {
+        toast('❌ ' + err.message, false);
+        if (card) card.classList.remove('deleting');
+      }
+    }
+
+    // ============================================================
+    //  UPLOAD
+    // ============================================================
+    function openUploadModal() {
+      pendingUploadFile = null;
+      document.getElementById('uploadTitleInput').value = '';
+      document.getElementById('uploadLocationInput').value = '';
+      document.getElementById('uploadPreview').innerHTML = '';
+      document.getElementById('uploadProgress').classList.remove('active');
+      document.getElementById('uploadProgressBar').style.width = '0%';
+      document.getElementById('uploadStatus').textContent = '';
+      document.getElementById('confirmUploadBtn').disabled = true;
+      document.getElementById('uploadFileInput').value = '';
+      openModal('uploadModal');
+    }
+
+    function handleUploadFile(file) {
+      if (!file) return;
+      const ALLOWED = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+      const MAX_MB = 10;
+      const status = document.getElementById('uploadStatus');
+      if (!ALLOWED.includes(file.type)) {
+        status.textContent = '❌ Only JPG, PNG, WEBP, or GIF';
+        status.style.color = '#f87171';
+        return;
+      }
+      if (file.size > MAX_MB * 1024 * 1024) {
+        status.textContent = '❌ File too large (max ' + MAX_MB + 'MB)';
+        status.style.color = '#f87171';
+        return;
+      }
+      pendingUploadFile = file;
+      status.textContent = '✅ Ready: ' + file.name;
+      status.style.color = '#4ade80';
+      document.getElementById('confirmUploadBtn').disabled = false;
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('uploadPreview').innerHTML =
+          '<img src="' + e.target.result + '" alt="Preview">';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function performUpload() {
+      if (!pendingUploadFile) return;
+      const btn = document.getElementById('confirmUploadBtn');
+      const status = document.getElementById('uploadStatus');
+      const progressWrap = document.getElementById('uploadProgress');
+      const progressBar = document.getElementById('uploadProgressBar');
+      btn.disabled = true;
+
+      try {
+        status.textContent = '🔐 Getting upload signature...';
+        status.style.color = '#c084fc';
+        const sig = await api('/api/uploads/signature');
+
+        status.textContent = '⏳ Uploading to Cloudinary...';
+        progressWrap.classList.add('active');
+        progressBar.style.width = '0%';
+
+        const fd = new FormData();
+        fd.append('file', pendingUploadFile);
+        fd.append('api_key', sig.apiKey);
+        fd.append('timestamp', sig.timestamp);
+        fd.append('signature', sig.signature);
+        fd.append('folder', sig.folder);
+
+        const uploadUrl = 'https://api.cloudinary.com/v1_1/' + sig.cloudName + '/image/upload';
+
+        const result = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', uploadUrl, true);
+          xhr.upload.onprogress = e => {
+            if (e.lengthComputable) {
+              progressBar.style.width = ((e.loaded / e.total) * 100) + '%';
+            }
+          };
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              try { resolve(JSON.parse(xhr.responseText)); }
+              catch (err) { reject(new Error('Invalid response')); }
+            } else {
+              reject(new Error('Cloudinary upload failed: ' + xhr.status));
+            }
+          };
+          xhr.onerror = () => reject(new Error('Network error'));
+          xhr.send(fd);
+        });
+
+        progressBar.style.width = '100%';
+        status.textContent = '💾 Saving to database...';
+        status.style.color = '#c084fc';
+
+        const title = document.getElementById('uploadTitleInput').value.trim() || 'Untitled';
+        const location = document.getElementById('uploadLocationInput').value.trim();
+
+        await api('/api/photos', {
+          method: 'POST',
+          body: {
+            title,
+            location,
+            img_url: result.secure_url,
+            cloudinary_public_id: result.public_id || null
+          }
+        });
+
+        status.textContent = '✅ Uploaded!';
+        status.style.color = '#4ade80';
+
+        setTimeout(() => {
+          closeModal('uploadModal');
+          toast('📸 "' + title + '" uploaded!');
+          loadPhotos();
+        }, 700);
+      } catch (err) {
+        console.error(err);
+        status.textContent = '❌ ' + err.message;
+        status.style.color = '#f87171';
+        progressWrap.classList.remove('active');
+        btn.disabled = false;
+      }
+    }
+
+    // ============================================================
+    //  STATS
+    // ============================================================
+    function updateStats() {
+      document.getElementById('photoCount').textContent = photos.length;
+      const likes = photos.reduce((s, p) => s + (p.likes || 0), 0);
+      document.getElementById('totalLikes').textContent = likes;
+      const comments = photos.reduce((s, p) => s + (p.comments_count || 0), 0);
+      document.getElementById('totalComments').textContent = comments;
+      const totalStars = photos.reduce((s, p) => s + (p.ratings_sum || 0), 0);
+      const totalRatings = photos.reduce((s, p) => s + (p.ratings_count || 0), 0);
+      const avg = totalRatings > 0 ? (totalStars / totalRatings).toFixed(1) : '0.0';
+      document.getElementById('avgRating').textContent = avg;
+    }
+
+    // ============================================================
+    //  UI ADMIN TOGGLE
+    // ============================================================
+    function updateAdminUI() {
+      const bar = document.getElementById('adminEditBar');
+      const badge = document.getElementById('adminBadgeContainer');
+      const btn = document.getElementById('loginToggleBtn');
+      const whatsapp = document.getElementById('whatsappContactBtn');
+
+      if (isAdmin) {
+        bar.classList.remove('hidden');
+        badge.style.display = 'inline-block';
+        btn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-outline');
+        if (whatsapp) whatsapp.style.display = 'none';
+      } else {
+        bar.classList.add('hidden');
+        badge.style.display = 'none';
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Admin login';
+        btn.classList.add('btn-primary');
+        btn.classList.remove('btn-outline');
+        if (whatsapp) whatsapp.style.display = 'inline-flex';
+      }
+      renderGallery();
+    }
+
+    // ============================================================
+    //  WHATSAPP
+    // ============================================================
+    function setupWhatsAppButton() {
+      const btn = document.getElementById('whatsappContactBtn');
+      if (!btn) return;
+      const digits = String(WHATSAPP_NUMBER).replace(/\D/g, '');
+      const valid = digits.length >= 8 && digits.length <= 15 && !digits.startsWith('0');
+      if (!valid) {
+        btn.classList.add('invalid');
+        btn.href = '#';
+        btn.removeAttribute('target');
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          alert('⚠️ WhatsApp number not configured. Edit WHATSAPP_NUMBER in the code.');
+        });
+        const label = document.getElementById('whatsappBtnText');
+        if (label) label.textContent = 'WhatsApp (not configured)';
+        return;
+      }
+      btn.href = `https://wa.me/${digits}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+      btn.setAttribute('target', '_blank');
+    }
+
+    // ============================================================
+    //  MODAL HELPERS
+    // ============================================================
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    // ============================================================
+    //  EVENT WIRING
+    // ============================================================
+    document.getElementById('loginToggleBtn').addEventListener('click', () => {
+      if (isAdmin) performLogout();
+      else openModal('loginModal');
+    });
+
+    document.getElementById('cancelLoginBtn').addEventListener('click', () => closeModal('loginModal'));
+    document.getElementById('submitLoginBtn').addEventListener('click', performLogin);
+    document.getElementById('passwordInput').addEventListener('keypress', e => {
+      if (e.key === 'Enter') performLogin();
+    });
+
+    document.getElementById('cancelSetupBtn').addEventListener('click', () => closeModal('setupModal'));
+    document.getElementById('submitSetupBtn').addEventListener('click', performSetup);
+
+    document.getElementById('forgotPasswordBtn').addEventListener('click', () => {
+      closeModal('loginModal');
+      openModal('forgotModal');
+    });
+    document.getElementById('cancelForgotBtn').addEventListener('click', () => closeModal('forgotModal'));
+    document.getElementById('sendResetBtn').addEventListener('click', performForgotPassword);
+
+    document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
+      closeModal('deleteModal');
+      pendingDeleteId = null;
+    });
+    document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
+
+    document.getElementById('addPhotoBtn').addEventListener('click', openUploadModal);
+    document.getElementById('logoutBtn2').addEventListener('click', performLogout);
+    document.getElementById('refreshBtn').addEventListener('click', loadPhotos);
+
+    document.getElementById('cancelUploadBtn').addEventListener('click', () => closeModal('uploadModal'));
+    document.getElementById('confirmUploadBtn').addEventListener('click', performUpload);
+
+    const uploadZone = document.getElementById('uploadZone');
+    const uploadFileInput = document.getElementById('uploadFileInput');
+    uploadZone.addEventListener('click', () => uploadFileInput.click());
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      handleUploadFile(e.dataTransfer.files[0]);
+    });
+    uploadFileInput.addEventListener('change', e => handleUploadFile(e.target.files[0]));
+
+    // ============================================================
+    //  GLOBAL EVENT DELEGATION (grid clicks)
+    // ============================================================
+    const grid = document.getElementById('photoGrid');
+
+    grid.addEventListener('click', async (e) => {
+      // ---- LIKE ----
+      const likeBtn = e.target.closest('.like-btn');
+      if (likeBtn) { e.preventDefault(); toggleLike(likeBtn.dataset.id, likeBtn); return; }
+
+      // ---- STAR ----
+      const star = e.target.closest('.star-picker i');
+      if (star) {
+        e.preventDefault();
+        const picker = star.closest('.star-picker');
+        const photoId = picker.dataset.photoId;
+        const value = parseInt(star.dataset.value, 10);
+        const thanks = picker.parentElement.querySelector('.rate-thanks');
+        submitRating(photoId, value, picker, thanks);
+        return;
+      }
+
+      // ---- COMMENT SUBMIT ----
+      const submitBtn = e.target.closest('.comment-submit-btn');
+      if (submitBtn) {
+        e.preventDefault();
+        submitComment(submitBtn.closest('.comment-form'));
+        return;
+      }
+
+      // ---- DELETE PHOTO (admin) ----
+      if (!isAdmin) return;
+      const delBtn = e.target.closest('.delete-photo');
+      if (delBtn) {
+        e.preventDefault();
+        openDeleteModal(delBtn.dataset.id);
+      }
+    });
+
+    // Star hover
+    grid.addEventListener('mouseover', e => {
+      const star = e.target.closest('.star-picker i');
+      if (!star) return;
+      const picker = star.closest('.star-picker');
+      const val = parseInt(star.dataset.value, 10);
+      picker.querySelectorAll('i').forEach((s, idx) => {
+        s.classList.toggle('hovered', idx < val);
+      });
+    });
+    grid.addEventListener('mouseout', e => {
+      const picker = e.target.closest('.star-picker');
+      if (!picker) return;
+      picker.querySelectorAll('i').forEach(s => s.classList.remove('hovered'));
+    });
+
+    // Char counter
+    grid.addEventListener('input', e => {
+      const ta = e.target.closest('.comment-text-input');
+      if (!ta) return;
+      const form = ta.closest('.comment-form');
+      const cc = form.querySelector('.comment-char-count');
+      if (cc) cc.textContent = ta.value.length + '/500';
+    });
+
+    // Close modals on overlay click or Escape
+    document.querySelectorAll('.modal-overlay').forEach(m => {
+      m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+      }
+    });
+
+    // Password strength in setup
+    document.getElementById('setupPasswordInput').addEventListener('input', e => {
+      const pw = e.target.value;
+      const bar = document.getElementById('setupPasswordStrengthBar');
+      bar.className = 'password-strength-bar';
+      if (!pw) { bar.style.width = '0'; return; }
+      let score = 0;
+      if (pw.length >= 8) score++;
+      if (pw.length >= 12) score++;
+      if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) score++;
+      if (/\d/.test(pw)) score++;
+      if (/[^A-Za-z0-9]/.test(pw)) score++;
+      if (score <= 2) bar.classList.add('strength-weak');
+      else if (score <= 3) bar.classList.add('strength-medium');
+      else bar.classList.add('strength-strong');
+    });
+
+    // ============================================================
+    //  BOOT
+    // ============================================================
+    (async function boot() {
+      setupWhatsAppButton();
+      await checkBackendHealth();
+      const exists = await checkAdminExists();
+      await checkSession();
+      await loadPhotos();
+      if (!exists) {
+        openModal('setupModal');
+      }
+    })();
+
+  })();
+</script>
+</body>
+</html>
