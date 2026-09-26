@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.unsplash.com https://*.unsplash.com https://res.cloudinary.com https://*.cloudinary.com data: blob:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://luminabackend-inky.vercel.app https://luminabackend-inky.vercel.app'; https://api.cloudinary.com https://res.cloudinary.com;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.unsplash.com https://*.unsplash.com https://res.cloudinary.com https://*.cloudinary.com data: blob:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://luminabackend-inky.vercel.app https://api.cloudinary.com https://res.cloudinary.com;">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <title>LUMINA · photography portfolio</title>
@@ -27,27 +27,27 @@
     .nav-links a:hover, .nav-links a.active { color: white; }
     .nav-links a.active i { color: #c084fc; }
 
-    /* ---------- BUTTONS ---------- */
-    .btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 0.6rem 1.2rem; border-radius: 40px; font-weight: 500; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: 0.2s; backdrop-filter: blur(4px); }
+    /* ---------- BUTTONS (OPTIMIZED) ---------- */
+    .btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 0.6rem 1.2rem; border-radius: 40px; font-weight: 500; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.05s; transform: translateZ(0); -webkit-tap-highlight-color: transparent; }
+    .btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+    .btn:active { transform: scale(0.96); }
     .btn-primary { background: #c084fc; border: 1px solid #c084fc; color: #0b0d10; font-weight: 600; }
     .btn-primary i { color: #0b0d10; }
-    .btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
     .btn-primary:hover { background: #b16eff; border-color: #b16eff; }
+    .btn-primary:active { background: #9d5cf5; }
     .btn-outline { background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); }
     .btn-danger { background: #f43f5e; border: 1px solid #f43f5e; color: white; font-weight: 600; }
     .btn-danger:hover { background: #e11d48; border-color: #e11d48; }
-    .btn-cloud { background: #38bdf8; border: 1px solid #38bdf8; color: #0b0d10; font-weight: 600; }
-    .btn-cloud:hover { background: #0ea5e9; border-color: #0ea5e9; }
-    .btn-cloud i { color: #0b0d10; }
+    .btn-danger:active { background: #be123c; }
     .btn-link { background: transparent; border: none; color: #c084fc; font-size: 0.85rem; cursor: pointer; padding: 0.3rem; transition: 0.2s; }
     .btn-link:hover { color: #b16eff; text-decoration: underline; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
     /* ---------- DASHBOARD HEADER ---------- */
     .dashboard-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.2rem; flex-wrap: wrap; gap: 1.5rem; }
     .dashboard-header h1 { font-size: 2.6rem; font-weight: 500; line-height: 1.2; }
     .dashboard-header h1 span { color: #c084fc; font-weight: 600; }
-    .stats { display: flex; gap: 2rem; background: rgba(20, 24, 30, 0.7); backdrop-filter: blur(8px); padding: 0.9rem 2rem; border-radius: 80px; border: 1px solid rgba(255, 255, 255, 0.05); flex-wrap: wrap; }
+    .stats { display: flex; gap: 2rem; background: rgba(20, 24, 30, 0.85); padding: 0.9rem 2rem; border-radius: 80px; border: 1px solid rgba(255, 255, 255, 0.05); flex-wrap: wrap; }
     .stat-item { display: flex; align-items: center; gap: 0.7rem; }
     .stat-item i { font-size: 1.4rem; color: #c084fc; opacity: 0.9; }
     .stat-item div { display: flex; flex-direction: column; }
@@ -60,9 +60,10 @@
     .edit-bar .edit-label { display: flex; align-items: center; gap: 0.8rem; font-weight: 500; color: #cfd7e6; }
     .edit-bar .edit-label i { background: #c084fc; color: #0b0d10; padding: 0.4rem; border-radius: 50%; font-size: 0.9rem; }
     .edit-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
-    .pill-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); color: #e9edf2; padding: 0.6rem 1.3rem; border-radius: 40px; font-size: 0.9rem; font-weight: 450; display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; transition: 0.2s; }
+    .pill-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.08); color: #e9edf2; padding: 0.6rem 1.3rem; border-radius: 40px; font-size: 0.9rem; font-weight: 450; display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; transition: background 0.15s, border-color 0.15s, transform 0.05s; transform: translateZ(0); -webkit-tap-highlight-color: transparent; }
     .pill-btn i { font-size: 0.9rem; color: #c084fc; }
     .pill-btn:hover { background: rgba(255, 255, 255, 0.12); border-color: #c084fc; }
+    .pill-btn:active { transform: scale(0.96); }
 
     /* ---------- CONNECTION STATUS ---------- */
     .conn-status { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #9aa3b2; padding: 0.4rem 0.9rem; background: rgba(20, 24, 30, 0.7); border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.05); }
@@ -77,25 +78,28 @@
 
     /* ---------- PHOTO GRID ---------- */
     .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.8rem; margin-bottom: 3rem; }
-    .photo-card { background: #14181f; border-radius: 24px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.25s ease, border-color 0.2s, opacity 0.3s; box-shadow: 0 20px 30px -20px black; display: flex; flex-direction: column; }
+    .photo-card { background: #14181f; border-radius: 24px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.2s ease, border-color 0.15s, opacity 0.3s; box-shadow: 0 20px 30px -20px black; display: flex; flex-direction: column; transform: translateZ(0); will-change: transform; }
     .photo-card:hover { transform: translateY(-6px); border-color: rgba(192, 132, 252, 0.4); }
     .photo-card.deleting { opacity: 0.4; transform: scale(0.95); pointer-events: none; }
-    .photo-thumb { position: relative; aspect-ratio: 4 / 3; background: #1e232b; overflow: hidden; }
-    .photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
+    .photo-thumb { position: relative; aspect-ratio: 4 / 3; background: #1e232b; overflow: hidden; cursor: zoom-in; }
+    .photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; user-select: none; -webkit-user-drag: none; }
     .photo-card:hover .photo-thumb img { transform: scale(1.02); }
     .photo-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; opacity: 0; transition: 0.2s; z-index: 2; }
     .photo-card:hover .photo-actions { opacity: 1; }
-    .icon-btn { background: rgba(15, 18, 22, 0.85); backdrop-filter: blur(6px); border: none; color: white; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.15s; font-size: 0.9rem; }
+    .icon-btn { background: rgba(15, 18, 22, 0.9); border: none; color: white; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s, transform 0.05s; font-size: 0.9rem; transform: translateZ(0); -webkit-tap-highlight-color: transparent; }
     .icon-btn:hover { background: #c084fc; color: #0b0d10; }
+    .icon-btn:active { transform: scale(0.9); }
     .icon-btn.delete-photo:hover { background: #f43f5e; color: white; }
 
     /* ---------- LIKE + RATING ROW ---------- */
     .photo-like-row { display: flex; align-items: center; justify-content: space-between; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(255, 255, 255, 0.05); gap: 0.8rem; flex-wrap: wrap; }
-    .like-btn { background: transparent; border: none; color: #b0b8c5; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.9rem; padding: 0.35rem 0.8rem; border-radius: 30px; transition: 0.15s; font-weight: 500; }
-    .like-btn i { font-size: 1.1rem; transition: 0.15s; }
+    .like-btn { background: transparent; border: none; color: #b0b8c5; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.9rem; padding: 0.35rem 0.8rem; border-radius: 30px; transition: background 0.15s, color 0.15s, transform 0.05s; font-weight: 500; transform: translateZ(0); -webkit-tap-highlight-color: transparent; }
+    .like-btn i { font-size: 1.1rem; transition: color 0.15s, transform 0.1s; }
     .like-btn:hover { background: rgba(192, 132, 252, 0.1); color: #c084fc; }
+    .like-btn:active { transform: scale(0.94); }
     .like-btn.liked { color: #f43f5e; }
     .like-btn.liked i { color: #f43f5e; font-weight: 900; }
+    .like-btn.liked:active i { transform: scale(1.2); }
     .like-count { font-weight: 500; font-size: 0.9rem; color: #9aa3b2; display: flex; align-items: center; gap: 0.3rem; }
     .like-count i { color: #f43f5e; font-size: 0.8rem; }
     .rating-display { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: #fbbf24; font-weight: 500; }
@@ -123,8 +127,9 @@
     .rate-photo { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; padding: 0.6rem 0.8rem; background: #1a2028; border-radius: 12px; flex-wrap: wrap; }
     .rate-photo-label { font-size: 0.8rem; color: #9aa3b2; }
     .star-picker { display: flex; gap: 0.15rem; }
-    .star-picker i { font-size: 1.3rem; color: #4a5262; cursor: pointer; transition: 0.15s; }
-    .star-picker i:hover, .star-picker i.active { color: #fbbf24; transform: scale(1.1); }
+    .star-picker i { font-size: 1.3rem; color: #4a5262; cursor: pointer; transition: color 0.1s, transform 0.1s; transform: translateZ(0); -webkit-tap-highlight-color: transparent; }
+    .star-picker i:hover, .star-picker i.active { color: #fbbf24; transform: scale(1.15); }
+    .star-picker i:active { transform: scale(0.9); }
     .star-picker i.hovered { color: #fbbf24; }
     .rate-thanks { font-size: 0.75rem; color: #4ade80; margin-left: auto; }
 
@@ -135,9 +140,10 @@
     .comment-text-input { flex: 1; resize: vertical; min-height: 38px; max-height: 120px; }
     .comment-name-input:focus, .comment-text-input:focus { border-color: #c084fc; }
     .comment-submit-row { display: flex; justify-content: flex-end; gap: 0.5rem; align-items: center; }
-    .comment-submit-btn { background: #c084fc; color: #0b0d10; border: none; padding: 0.5rem 1.2rem; border-radius: 30px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .comment-submit-btn { background: #c084fc; color: #0b0d10; border: none; padding: 0.5rem 1.2rem; border-radius: 30px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: background 0.15s, transform 0.05s; display: inline-flex; align-items: center; gap: 0.4rem; transform: translateZ(0); -webkit-tap-highlight-color: transparent; }
     .comment-submit-btn:hover { background: #b16eff; }
-    .comment-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .comment-submit-btn:active { transform: scale(0.94); background: #9d5cf5; }
+    .comment-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
     .comment-char-count { font-size: 0.7rem; color: #5a6377; }
 
     .comment-list { display: flex; flex-direction: column; gap: 0.7rem; max-height: 280px; overflow-y: auto; padding-right: 0.3rem; }
@@ -164,8 +170,28 @@
     .loading-state i { font-size: 2.5rem; color: #c084fc; opacity: 0.7; margin-bottom: 1rem; animation: spin 1s linear infinite; display: inline-block; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ---------- LIGHTBOX ---------- */
+    .lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; padding: 2rem; }
+    .lightbox.active { opacity: 1; pointer-events: auto; }
+    .lightbox-image-wrap { max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; align-items: center; gap: 1rem; transform: scale(0.96); transition: transform 0.2s; }
+    .lightbox.active .lightbox-image-wrap { transform: scale(1); }
+    .lightbox-image-wrap img { max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 12px; box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.9); display: block; background: #0b0d10; transition: opacity 0.2s; }
+    .lightbox-info { color: #e9edf2; text-align: center; max-width: 100%; }
+    .lightbox-info h3 { font-size: 1.2rem; margin-bottom: 0.3rem; color: white; font-weight: 500; }
+    .lightbox-info .lightbox-meta { font-size: 0.8rem; color: #9aa3b2; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .lightbox-info .lightbox-meta span i { color: #c084fc; margin-right: 0.3rem; }
+    .lightbox-close, .lightbox-prev, .lightbox-next { position: absolute; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s, transform 0.05s; font-size: 1.1rem; z-index: 2; -webkit-tap-highlight-color: transparent; }
+    .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover { background: rgba(192, 132, 252, 0.3); border-color: #c084fc; }
+    .lightbox-close:active, .lightbox-prev:active, .lightbox-next:active { transform: scale(0.9); }
+    .lightbox-close { top: 20px; right: 20px; }
+    .lightbox-prev { top: 50%; left: 20px; transform: translateY(-50%); }
+    .lightbox-prev:active { transform: translateY(-50%) scale(0.9); }
+    .lightbox-next { top: 50%; right: 20px; transform: translateY(-50%); }
+    .lightbox-next:active { transform: translateY(-50%) scale(0.9); }
+    .lightbox-counter { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.6); color: #e9edf2; padding: 0.4rem 1rem; border-radius: 30px; font-size: 0.85rem; font-weight: 500; z-index: 2; }
+
     /* ---------- MODALS ---------- */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
     .modal-box { background: #12171e; border: 1px solid rgba(192, 132, 252, 0.4); border-radius: 36px; padding: 2.5rem 2rem; width: 90%; max-width: 420px; box-shadow: 0 40px 70px -20px black; transform: scale(0.95); transition: transform 0.2s; max-height: 90vh; overflow-y: auto; }
     .modal-overlay.active .modal-box { transform: scale(1); }
@@ -222,9 +248,10 @@
     /* ---------- FOOTER ---------- */
     .footer-dash { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.85rem; color: #7b8598; flex-wrap: wrap; gap: 1.5rem; }
     .footer-socials { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-    .footer-socials .whatsapp-btn { display: inline-flex; align-items: center; gap: 0.6rem; background: #25D366; color: white; text-decoration: none; padding: 0.75rem 1.5rem; border-radius: 40px; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; box-shadow: 0 6px 20px -8px rgba(37, 211, 102, 0.5); border: 1px solid transparent; }
+    .footer-socials .whatsapp-btn { display: inline-flex; align-items: center; gap: 0.6rem; background: #25D366; color: white; text-decoration: none; padding: 0.75rem 1.5rem; border-radius: 40px; font-weight: 600; font-size: 0.9rem; transition: background 0.15s, transform 0.15s, box-shadow 0.15s; box-shadow: 0 6px 20px -8px rgba(37, 211, 102, 0.5); border: 1px solid transparent; transform: translateZ(0); -webkit-tap-highlight-color: transparent; }
     .footer-socials .whatsapp-btn i { color: white; font-size: 1.25rem; }
     .footer-socials .whatsapp-btn:hover { background: #1da851; transform: translateY(-2px); box-shadow: 0 10px 25px -8px rgba(37, 211, 102, 0.7); }
+    .footer-socials .whatsapp-btn:active { transform: translateY(0) scale(0.97); background: #189247; }
     .footer-socials .whatsapp-btn.invalid { background: #6b7280; cursor: not-allowed; box-shadow: none; }
     .footer-socials .whatsapp-btn.invalid:hover { background: #6b7280; transform: none; box-shadow: none; }
 
@@ -243,6 +270,12 @@
       .footer-socials { justify-content: center; }
       .comment-name-input { width: 100%; }
       .comment-input-row { flex-direction: column; }
+      .lightbox { padding: 1rem; }
+      .lightbox-close { top: 12px; right: 12px; width: 40px; height: 40px; }
+      .lightbox-prev { left: 8px; width: 40px; height: 40px; }
+      .lightbox-next { right: 8px; width: 40px; height: 40px; }
+      .lightbox-counter { top: 14px; font-size: 0.75rem; padding: 0.3rem 0.8rem; }
+      .lightbox-image-wrap img { max-height: 70vh; }
     }
     @media (max-width: 480px) {
       .stats { flex-wrap: wrap; gap: 0.8rem; border-radius: 30px; }
@@ -438,6 +471,21 @@
   </div>
 </div>
 
+<!-- ========== LIGHTBOX ========== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close"><i class="fas fa-times"></i></button>
+  <button class="lightbox-prev" id="lightboxPrev" aria-label="Previous photo"><i class="fas fa-chevron-left"></i></button>
+  <button class="lightbox-next" id="lightboxNext" aria-label="Next photo"><i class="fas fa-chevron-right"></i></button>
+  <div class="lightbox-image-wrap">
+    <img id="lightboxImage" src="" alt="Photo" />
+    <div class="lightbox-info">
+      <h3 id="lightboxTitle"></h3>
+      <div class="lightbox-meta" id="lightboxMeta"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ========== TOAST ========== -->
 <div class="toast" id="toast" role="status" aria-live="polite">
   <i class="fas fa-check-circle"></i> <span id="toastMsg">Ready</span>
@@ -445,30 +493,23 @@
 
 <script>
   // ============================================================
-  //  LUMINA FRONTEND — Backend-powered portfolio
+  //  LUMINA FRONTEND — with lightbox + optimized buttons
   // ============================================================
   (function() {
     'use strict';
 
-    // ============================================================
-    //  ⚙️ CONFIGURATION
-    // ============================================================
     const API_BASE = 'https://luminabackend-inky.vercel.app';
-    const WHATSAPP_NUMBER = '254740845855';  // ← your WhatsApp number
+    const WHATSAPP_NUMBER = '254740845855';
     const WHATSAPP_MESSAGE = 'Hello';
 
-    // ============================================================
-    //  STATE
-    // ============================================================
     let isAdmin = false;
     let photos = [];
     let pendingDeleteId = null;
     let pendingUploadFile = null;
     let toastTimeout;
+    let lightboxIndex = 0;
+    let lightboxPhotos = [];
 
-    // ============================================================
-    //  HELPERS
-    // ============================================================
     function escapeHTML(str) {
       if (typeof str !== 'string') return '';
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -483,6 +524,13 @@
         const p = new URL(t, window.location.origin);
         return p.protocol === 'http:' || p.protocol === 'https:';
       } catch { return false; }
+    }
+    function optimizedImageUrl(url, width = 1600) {
+      if (typeof url !== 'string') return url;
+      if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
+        return url.replace('/upload/', `/upload/w_${width},q_auto,f_auto/`);
+      }
+      return url;
     }
     function placeholderImage() {
       return 'data:image/svg+xml;utf8,' + encodeURIComponent(
@@ -517,24 +565,12 @@
       toastTimeout = setTimeout(() => el.classList.remove('show'), 3200);
     }
 
-    // ============================================================
-    //  API WRAPPER — sends Bearer token + cookie
-    // ============================================================
     async function api(path, options = {}) {
       const url = API_BASE + path;
       const token = sessionStorage.getItem('lumina_token');
-      const headers = {
-        'Content-Type': 'application/json',
-        ...(options.headers || {})
-      };
-      if (token) {
-        headers['Authorization'] = 'Bearer ' + token;
-      }
-      const opts = {
-        ...options,
-        headers,
-        credentials: 'include'   // keep cookie fallback
-      };
+      const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+      if (token) headers['Authorization'] = 'Bearer ' + token;
+      const opts = { ...options, headers, credentials: 'include' };
       if (opts.body && typeof opts.body === 'object') {
         opts.body = JSON.stringify(opts.body);
       }
@@ -550,9 +586,6 @@
       return data;
     }
 
-    // ============================================================
-    //  CONNECTION STATUS
-    // ============================================================
     async function checkBackendHealth() {
       const dot = document.getElementById('connDot');
       const text = document.getElementById('connText');
@@ -563,20 +596,12 @@
       } catch (err) {
         dot.className = 'conn-dot offline';
         text.textContent = 'Offline';
-        console.error('Backend unreachable:', err);
       }
     }
 
-    // ============================================================
-    //  AUTH
-    // ============================================================
     async function checkSession() {
       const token = sessionStorage.getItem('lumina_token');
-      if (!token) {
-        isAdmin = false;
-        updateAdminUI();
-        return;
-      }
+      if (!token) { isAdmin = false; updateAdminUI(); return; }
       try {
         await api('/api/auth/me');
         isAdmin = true;
@@ -599,17 +624,10 @@
       const password = document.getElementById('passwordInput').value;
       const errEl = document.getElementById('loginError');
       errEl.textContent = '';
-
-      if (!email || !password) {
-        errEl.textContent = 'Please fill in both fields.';
-        return;
-      }
+      if (!email || !password) { errEl.textContent = 'Please fill in both fields.'; return; }
       try {
         const loginData = await api('/api/auth/login', { method: 'POST', body: { email, password } });
-        if (loginData.token) {
-          sessionStorage.setItem('lumina_token', loginData.token);
-          console.log('✅ Token saved to sessionStorage');
-        }
+        if (loginData.token) sessionStorage.setItem('lumina_token', loginData.token);
         isAdmin = true;
         closeModal('loginModal');
         document.getElementById('passwordInput').value = '';
@@ -635,20 +653,14 @@
       const confirm = document.getElementById('setupConfirmInput').value;
       const errEl = document.getElementById('setupError');
       const okEl = document.getElementById('setupSuccess');
-      errEl.textContent = '';
-      okEl.textContent = '';
-
+      errEl.textContent = ''; okEl.textContent = '';
       if (!email || !password || !confirm) { errEl.textContent = 'Please fill all fields.'; return; }
       if (password !== confirm) { errEl.textContent = 'Passwords do not match.'; return; }
       if (password.length < 8) { errEl.textContent = 'Password too short.'; return; }
-
       try {
         await api('/api/auth/setup', { method: 'POST', body: { email, password } });
         okEl.textContent = '✅ Admin created! You can now log in.';
-        setTimeout(() => {
-          closeModal('setupModal');
-          openModal('loginModal');
-        }, 1200);
+        setTimeout(() => { closeModal('setupModal'); openModal('loginModal'); }, 1200);
       } catch (err) {
         errEl.textContent = err.message || 'Setup failed';
       }
@@ -658,11 +670,8 @@
       const email = document.getElementById('resetEmailInput').value.trim();
       const errEl = document.getElementById('forgotError');
       const okEl = document.getElementById('forgotSuccess');
-      errEl.textContent = '';
-      okEl.textContent = '';
-
+      errEl.textContent = ''; okEl.textContent = '';
       if (!email) { errEl.textContent = 'Please enter your email.'; return; }
-
       try {
         const res = await api('/api/auth/request-reset', { method: 'POST', body: { email } });
         okEl.textContent = res.message || 'If that email is registered, a link was sent.';
@@ -672,9 +681,6 @@
       }
     }
 
-    // ============================================================
-    //  PHOTOS
-    // ============================================================
     async function loadPhotos() {
       try {
         const { photos: list } = await api('/api/photos');
@@ -689,7 +695,6 @@
     function renderGallery() {
       const grid = document.getElementById('photoGrid');
       grid.textContent = '';
-
       if (photos.length === 0) {
         const empty = document.createElement('div');
         empty.className = 'empty-state';
@@ -699,10 +704,7 @@
         updateStats();
         return;
       }
-
-      photos.forEach(photo => {
-        grid.appendChild(buildPhotoCard(photo));
-      });
+      photos.forEach(photo => grid.appendChild(buildPhotoCard(photo)));
       updateStats();
     }
 
@@ -711,7 +713,6 @@
       card.className = 'photo-card';
       card.dataset.id = photo.id;
 
-      // ---- THUMB ----
       const thumb = document.createElement('div');
       thumb.className = 'photo-thumb';
       const img = document.createElement('img');
@@ -736,10 +737,8 @@
       }
       card.appendChild(thumb);
 
-      // ---- INFO ----
       const info = document.createElement('div');
       info.className = 'photo-info';
-
       const titleDiv = document.createElement('div');
       titleDiv.className = 'photo-title';
       titleDiv.textContent = photo.title;
@@ -759,38 +758,30 @@
       }
       info.appendChild(meta);
 
-      // ---- LIKE + RATING ROW ----
       const likeRow = document.createElement('div');
       likeRow.className = 'photo-like-row';
-
       const likeBtn = document.createElement('button');
       likeBtn.type = 'button';
       likeBtn.className = 'like-btn';
       likeBtn.dataset.id = photo.id;
       likeBtn.innerHTML = '<i class="far fa-heart"></i> <span>Like</span>';
-
       const likeCount = document.createElement('span');
       likeCount.className = 'like-count';
       likeCount.innerHTML = '<i class="fas fa-heart"></i> <span class="like-number">' + escapeHTML(String(photo.likes || 0)) + '</span>';
-
       const ratingsCount = photo.ratings_count || 0;
       const ratingsSum = photo.ratings_sum || 0;
       const avg = ratingsCount > 0 ? (ratingsSum / ratingsCount) : 0;
       const ratingDisplay = document.createElement('div');
       ratingDisplay.className = 'rating-display';
-      ratingDisplay.innerHTML = '<i class="fas fa-star"></i> ' + avg.toFixed(1) +
-        ' <span>(' + ratingsCount + ')</span>';
-
+      ratingDisplay.innerHTML = '<i class="fas fa-star"></i> ' + avg.toFixed(1) + ' <span>(' + ratingsCount + ')</span>';
       likeRow.appendChild(likeBtn);
       likeRow.appendChild(likeCount);
       likeRow.appendChild(ratingDisplay);
       info.appendChild(likeRow);
 
-      // ---- COMMENTS SECTION ----
       const commentsSection = document.createElement('div');
       commentsSection.className = 'comments-section';
       commentsSection.dataset.id = photo.id;
-
       const commentsHeader = document.createElement('div');
       commentsHeader.className = 'comments-header';
       commentsHeader.innerHTML =
@@ -800,11 +791,9 @@
           '<span class="comment-count-badge">' + (photo.comments_count || 0) + '</span>' +
         '</div>' +
         '<i class="fas fa-chevron-down comments-toggle-icon"></i>';
-
       const commentsBody = document.createElement('div');
       commentsBody.className = 'comments-body';
 
-      // Rating picker
       const rateRow = document.createElement('div');
       rateRow.className = 'rate-photo';
       rateRow.innerHTML = '<span class="rate-photo-label">Rate this photo:</span>';
@@ -825,7 +814,6 @@
       rateRow.appendChild(rateThanks);
       commentsBody.appendChild(rateRow);
 
-      // Comment form
       const form = document.createElement('div');
       form.className = 'comment-form';
       form.dataset.photoId = photo.id;
@@ -842,7 +830,6 @@
         '</div>';
       commentsBody.appendChild(form);
 
-      // Comment list (loaded lazily)
       const list = document.createElement('div');
       list.className = 'comment-list';
       list.dataset.photoId = photo.id;
@@ -854,7 +841,6 @@
       info.appendChild(commentsSection);
       card.appendChild(info);
 
-      // Toggle: expand + lazy-load comments the first time
       let commentsLoaded = false;
       commentsHeader.addEventListener('click', async () => {
         const expanded = commentsSection.classList.toggle('expanded');
@@ -867,9 +853,6 @@
       return card;
     }
 
-    // ============================================================
-    //  COMMENTS
-    // ============================================================
     async function loadCommentsForPhoto(photoId) {
       const list = document.querySelector('.comment-list[data-photo-id="' + photoId + '"]');
       if (!list) return;
@@ -898,62 +881,48 @@
       const item = document.createElement('div');
       item.className = 'comment-item';
       item.dataset.commentId = comment.id;
-
       const header = document.createElement('div');
       header.className = 'comment-item-header';
-
       const author = document.createElement('span');
       author.className = 'comment-author';
       author.innerHTML = '<i class="fas fa-user-circle"></i> ' + escapeHTML(comment.author_name || 'Anonymous');
-
       const meta = document.createElement('div');
       meta.style.display = 'flex';
       meta.style.alignItems = 'center';
       meta.style.gap = '0.5rem';
-
       const date = document.createElement('span');
       date.className = 'comment-date';
       date.textContent = formatRelativeTime(comment.created_at);
       meta.appendChild(date);
-
       if (isAdmin) {
         const del = document.createElement('button');
         del.type = 'button';
         del.className = 'comment-delete-btn';
         del.title = 'Delete comment';
         del.innerHTML = '<i class="fas fa-trash-alt"></i>';
-        del.addEventListener('click', (e) => {
-          e.stopPropagation();
-          deleteComment(comment.id);
-        });
+        del.addEventListener('click', (e) => { e.stopPropagation(); deleteComment(comment.id); });
         meta.appendChild(del);
       }
-
       header.appendChild(author);
       header.appendChild(meta);
-
       const text = document.createElement('div');
       text.className = 'comment-text';
       text.textContent = comment.text || '';
-
       item.appendChild(header);
       item.appendChild(text);
       return item;
     }
 
-        async function submitComment(formEl) {
+    async function submitComment(formEl) {
       const photoId = formEl.dataset.photoId;
       const nameInput = formEl.querySelector('.comment-name-input');
       const textInput = formEl.querySelector('.comment-text-input');
       const text = textInput.value.trim();
       if (!text) { toast('✍️ Please write a comment first', false); return; }
-
       const submitBtn = formEl.querySelector('.comment-submit-btn');
       submitBtn.disabled = true;
-
       const authorName = nameInput.value.trim() || 'Anonymous';
 
-      // ⚡ OPTIMISTIC: add the comment to the list immediately
       const list = formEl.parentElement.querySelector('.comment-list');
       const optimisticComment = {
         id: 'temp_' + Date.now(),
@@ -961,18 +930,12 @@
         text: text,
         created_at: new Date().toISOString()
       };
-
       if (list) {
-        // Remove "no comments yet" if present
         const noComments = list.querySelector('.no-comments');
         if (noComments) noComments.remove();
-
-        // Prepend the new comment
         const item = buildCommentItem(optimisticComment);
         list.insertBefore(item, list.firstChild);
       }
-
-      // Update the comment count badge on this photo instantly
       const photo = photos.find(p => String(p.id) === String(photoId));
       const card = formEl.closest('.photo-card');
       const badge = card?.querySelector('.comment-count-badge');
@@ -981,20 +944,15 @@
         if (badge) badge.textContent = photo.comments_count;
         updateStats();
       }
-
-      // Clear the form immediately
       textInput.value = '';
       nameInput.value = '';
       formEl.querySelector('.comment-char-count').textContent = '0/500';
 
-      // Send the request in the background
       try {
         const res = await api('/api/comments/photo/' + photoId, {
           method: 'POST',
           body: { author_name: authorName, text: text }
         });
-
-        // Replace optimistic comment with the real one (has the server ID)
         if (list && res.comment) {
           const tempItem = list.querySelector('[data-comment-id="' + optimisticComment.id + '"]');
           if (tempItem) {
@@ -1002,14 +960,11 @@
             tempItem.replaceWith(realItem);
           }
         }
-
         toast('💬 Comment posted!');
       } catch (err) {
-        // ❌ ROLLBACK
         if (list) {
           const tempItem = list.querySelector('[data-comment-id="' + optimisticComment.id + '"]');
           if (tempItem) tempItem.remove();
-          // Re-show "no comments yet" if list is now empty
           if (list.children.length === 0) {
             const empty = document.createElement('div');
             empty.className = 'no-comments';
@@ -1022,7 +977,6 @@
           if (badge) badge.textContent = photo.comments_count;
           updateStats();
         }
-        // Restore the comment text so they can retry
         textInput.value = text;
         nameInput.value = authorName === 'Anonymous' ? '' : authorName;
         toast('❌ ' + err.message, false);
@@ -1031,111 +985,80 @@
       }
     }
 
-    // ============================================================
-    //  RATINGS
-    // ============================================================
-       async function submitRating(photoId, stars, pickerEl, thanksEl) {
-      // ⚡ OPTIMISTIC: highlight stars instantly
+    async function deleteComment(commentId) {
+      if (!confirm('Delete this comment?')) return;
+      try {
+        await api('/api/comments/' + commentId, { method: 'DELETE' });
+        await loadPhotos();
+        document.querySelectorAll('.comments-section').forEach(section => {
+          const pid = section.dataset.id;
+          if (pid) { section.classList.add('expanded'); loadCommentsForPhoto(pid); }
+        });
+        toast('🗑️ Comment deleted', false);
+      } catch (err) {
+        toast('❌ ' + err.message, false);
+      }
+    }
+
+    async function submitRating(photoId, stars, pickerEl, thanksEl) {
       const stars_ = pickerEl.querySelectorAll('i');
       stars_.forEach((s, idx) => {
         s.className = idx < stars ? 'fas fa-star active' : 'far fa-star';
       });
-
-      // Show "thanks" immediately
       thanksEl.style.display = 'inline';
       setTimeout(() => { thanksEl.style.display = 'none'; }, 2500);
-
-      // Update the card's average rating instantly (best guess)
       const photo = photos.find(p => String(p.id) === String(photoId));
       const card = pickerEl.closest('.photo-card');
       const ratingDisplay = card?.querySelector('.rating-display');
-
       let oldCount = 0, oldSum = 0;
       if (photo) {
         oldCount = photo.ratings_count || 0;
         oldSum = photo.ratings_sum || 0;
-        // Optimistic: treat as first rating (worst case, only slightly off)
         photo.ratings_count = oldCount + 1;
         photo.ratings_sum = oldSum + stars;
       }
-
-      // Send the request in the background
       try {
-        const res = await api('/api/ratings/photo/' + photoId, {
-          method: 'POST',
-          body: { stars }
-        });
-
-        // Server returns accurate avg + count — update if different
+        const res = await api('/api/ratings/photo/' + photoId, { method: 'POST', body: { stars } });
         if (photo && res.count != null) {
           photo.ratings_count = res.count;
           photo.ratings_sum = Math.round(res.average * res.count);
         }
       } catch (err) {
-        // ❌ ROLLBACK
-        if (photo) {
-          photo.ratings_count = oldCount;
-          photo.ratings_sum = oldSum;
-        }
+        if (photo) { photo.ratings_count = oldCount; photo.ratings_sum = oldSum; }
         toast('❌ ' + err.message, false);
       }
-
-      // Refresh just the rating display (no full gallery rebuild)
       if (ratingDisplay && photo) {
         const avg = photo.ratings_count > 0 ? (photo.ratings_sum / photo.ratings_count) : 0;
-        ratingDisplay.innerHTML = '<i class="fas fa-star"></i> ' + avg.toFixed(1) +
-          ' <span>(' + photo.ratings_count + ')</span>';
+        ratingDisplay.innerHTML = '<i class="fas fa-star"></i> ' + avg.toFixed(1) + ' <span>(' + photo.ratings_count + ')</span>';
       }
       updateStats();
-
       toast('⭐ Thanks for rating ' + stars + ' star' + (stars > 1 ? 's' : '') + '!');
     }
 
-    // ============================================================
-    //  LIKES
-    // ============================================================
-       async function toggleLike(photoId, btnEl) {
-      // 1. Determine the new state from the current UI
+    async function toggleLike(photoId, btnEl) {
       const currentlyLiked = btnEl.classList.contains('liked');
       const newLiked = !currentlyLiked;
-
-      // 2. Save old state for rollback if server fails
       const photo = photos.find(p => String(p.id) === String(photoId));
       const oldLikes = photo ? (photo.likes || 0) : 0;
-
-      // 3. ⚡ OPTIMISTIC: update UI instantly (before the request!)
       const icon = btnEl.querySelector('i');
       const label = btnEl.querySelector('span');
       btnEl.classList.toggle('liked', newLiked);
       icon.className = newLiked ? 'fas fa-heart' : 'far fa-heart';
       label.textContent = newLiked ? 'Liked' : 'Like';
-
-      // Update the count on the card instantly
       const card = btnEl.closest('.photo-card');
       const likeNumber = card?.querySelector('.like-number');
       const optimisticCount = Math.max(0, oldLikes + (newLiked ? 1 : -1));
       if (likeNumber) likeNumber.textContent = optimisticCount;
-
-      // Update the in-memory photos array and stats bar
-      if (photo) {
-        photo.likes = optimisticCount;
-        photo._liked = newLiked;
-      }
+      if (photo) photo.likes = optimisticCount;
       updateStats();
-
-      // 4. Send the request in the background
       try {
         const res = await api('/api/likes/photo/' + photoId, { method: 'POST' });
-
-        // Server may have a different count if other users liked too
-        // Only update if it's meaningfully different
         if (photo && typeof res.count === 'number' && res.count !== optimisticCount) {
           photo.likes = res.count;
           if (likeNumber) likeNumber.textContent = res.count;
           updateStats();
         }
       } catch (err) {
-        // 5. ❌ ROLLBACK if the server rejected the request
         btnEl.classList.toggle('liked', currentlyLiked);
         icon.className = currentlyLiked ? 'fas fa-heart' : 'far fa-heart';
         label.textContent = currentlyLiked ? 'Liked' : 'Like';
@@ -1148,9 +1071,62 @@
       }
     }
 
-    // ============================================================
-    //  DELETE PHOTO
-    // ============================================================
+    function openLightbox(photoId) {
+      lightboxPhotos = photos.filter(p => isSafeImageURL(p.img_url || p.image_url));
+      lightboxIndex = lightboxPhotos.findIndex(p => String(p.id) === String(photoId));
+      if (lightboxIndex === -1) lightboxIndex = 0;
+      showLightboxPhoto();
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        const img = document.getElementById('lightboxImage');
+        if (img) img.src = '';
+      }, 200);
+    }
+
+    function showLightboxPhoto() {
+      if (lightboxPhotos.length === 0) return;
+      const photo = lightboxPhotos[lightboxIndex];
+      const img = document.getElementById('lightboxImage');
+      img.style.opacity = '0.5';
+      img.onload = () => { img.style.opacity = '1'; };
+      img.src = optimizedImageUrl(photo.img_url || photo.image_url, 1600);
+      img.alt = photo.title || 'Photo';
+      document.getElementById('lightboxTitle').textContent = photo.title || '';
+      const meta = document.getElementById('lightboxMeta');
+      meta.innerHTML = '';
+      if (photo.location) {
+        const loc = document.createElement('span');
+        loc.innerHTML = '<i class="fas fa-map-pin"></i>' + escapeHTML(photo.location);
+        meta.appendChild(loc);
+      }
+      if (photo.date) {
+        const dt = document.createElement('span');
+        dt.innerHTML = '<i class="fas fa-calendar-alt"></i>' + escapeHTML(photo.date);
+        meta.appendChild(dt);
+      }
+      document.getElementById('lightboxCounter').textContent = (lightboxIndex + 1) + ' / ' + lightboxPhotos.length;
+      document.getElementById('lightboxPrev').style.display = lightboxPhotos.length > 1 ? 'flex' : 'none';
+      document.getElementById('lightboxNext').style.display = lightboxPhotos.length > 1 ? 'flex' : 'none';
+    }
+
+    function lightboxNext() {
+      if (lightboxPhotos.length < 2) return;
+      lightboxIndex = (lightboxIndex + 1) % lightboxPhotos.length;
+      showLightboxPhoto();
+    }
+
+    function lightboxPrev() {
+      if (lightboxPhotos.length < 2) return;
+      lightboxIndex = (lightboxIndex - 1 + lightboxPhotos.length) % lightboxPhotos.length;
+      showLightboxPhoto();
+    }
+
     function openDeleteModal(id) {
       const photo = photos.find(p => p.id === id);
       if (!photo) return;
@@ -1183,9 +1159,6 @@
       }
     }
 
-    // ============================================================
-    //  UPLOAD
-    // ============================================================
     function openUploadModal() {
       pendingUploadFile = null;
       document.getElementById('uploadTitleInput').value = '';
@@ -1233,25 +1206,20 @@
       const progressWrap = document.getElementById('uploadProgress');
       const progressBar = document.getElementById('uploadProgressBar');
       btn.disabled = true;
-
       try {
         status.textContent = '🔐 Getting upload signature...';
         status.style.color = '#c084fc';
         const sig = await api('/api/uploads/signature');
-
         status.textContent = '⏳ Uploading to Cloudinary...';
         progressWrap.classList.add('active');
         progressBar.style.width = '0%';
-
         const fd = new FormData();
         fd.append('file', pendingUploadFile);
         fd.append('api_key', sig.apiKey);
         fd.append('timestamp', sig.timestamp);
         fd.append('signature', sig.signature);
         fd.append('folder', sig.folder);
-
         const uploadUrl = 'https://api.cloudinary.com/v1_1/' + sig.cloudName + '/image/upload';
-
         const result = await new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
           xhr.open('POST', uploadUrl, true);
@@ -1264,41 +1232,32 @@
             if (xhr.status >= 200 && xhr.status < 300) {
               try { resolve(JSON.parse(xhr.responseText)); }
               catch (err) { reject(new Error('Invalid response')); }
-            } else {
-              reject(new Error('Cloudinary upload failed: ' + xhr.status));
-            }
+            } else { reject(new Error('Cloudinary upload failed: ' + xhr.status)); }
           };
           xhr.onerror = () => reject(new Error('Network error'));
           xhr.send(fd);
         });
-
         progressBar.style.width = '100%';
         status.textContent = '💾 Saving to database...';
         status.style.color = '#c084fc';
-
         const title = document.getElementById('uploadTitleInput').value.trim() || 'Untitled';
         const location = document.getElementById('uploadLocationInput').value.trim();
-
         await api('/api/photos', {
           method: 'POST',
           body: {
-            title,
-            location,
+            title, location,
             img_url: result.secure_url,
             cloudinary_public_id: result.public_id || null
           }
         });
-
         status.textContent = '✅ Uploaded!';
         status.style.color = '#4ade80';
-
         setTimeout(() => {
           closeModal('uploadModal');
           toast('📸 "' + title + '" uploaded!');
           loadPhotos();
         }, 700);
       } catch (err) {
-        console.error(err);
         status.textContent = '❌ ' + err.message;
         status.style.color = '#f87171';
         progressWrap.classList.remove('active');
@@ -1306,30 +1265,38 @@
       }
     }
 
-    // ============================================================
-    //  STATS
-    // ============================================================
+    let _lastStats = { photos: -1, likes: -1, comments: -1, avg: '' };
     function updateStats() {
-      document.getElementById('photoCount').textContent = photos.length;
+      const photoCount = photos.length;
       const likes = photos.reduce((s, p) => s + (p.likes || 0), 0);
-      document.getElementById('totalLikes').textContent = likes;
       const comments = photos.reduce((s, p) => s + (p.comments_count || 0), 0);
-      document.getElementById('totalComments').textContent = comments;
       const totalStars = photos.reduce((s, p) => s + (p.ratings_sum || 0), 0);
       const totalRatings = photos.reduce((s, p) => s + (p.ratings_count || 0), 0);
       const avg = totalRatings > 0 ? (totalStars / totalRatings).toFixed(1) : '0.0';
-      document.getElementById('avgRating').textContent = avg;
+
+      if (_lastStats.photos !== photoCount) {
+        document.getElementById('photoCount').textContent = photoCount;
+        _lastStats.photos = photoCount;
+      }
+      if (_lastStats.likes !== likes) {
+        document.getElementById('totalLikes').textContent = likes;
+        _lastStats.likes = likes;
+      }
+      if (_lastStats.comments !== comments) {
+        document.getElementById('totalComments').textContent = comments;
+        _lastStats.comments = comments;
+      }
+      if (_lastStats.avg !== avg) {
+        document.getElementById('avgRating').textContent = avg;
+        _lastStats.avg = avg;
+      }
     }
 
-    // ============================================================
-    //  UI ADMIN TOGGLE
-    // ============================================================
     function updateAdminUI() {
       const bar = document.getElementById('adminEditBar');
       const badge = document.getElementById('adminBadgeContainer');
       const btn = document.getElementById('loginToggleBtn');
       const whatsapp = document.getElementById('whatsappContactBtn');
-
       if (isAdmin) {
         bar.classList.remove('hidden');
         badge.style.display = 'inline-block';
@@ -1348,9 +1315,6 @@
       renderGallery();
     }
 
-    // ============================================================
-    //  WHATSAPP
-    // ============================================================
     function setupWhatsAppButton() {
       const btn = document.getElementById('whatsappContactBtn');
       if (!btn) return;
@@ -1362,7 +1326,7 @@
         btn.removeAttribute('target');
         btn.addEventListener('click', e => {
           e.preventDefault();
-          alert('⚠️ WhatsApp number not configured. Edit WHATSAPP_NUMBER in the code.');
+          alert('⚠️ WhatsApp number not configured.');
         });
         const label = document.getElementById('whatsappBtnText');
         if (label) label.textContent = 'WhatsApp (not configured)';
@@ -1372,46 +1336,33 @@
       btn.setAttribute('target', '_blank');
     }
 
-    // ============================================================
-    //  MODAL HELPERS
-    // ============================================================
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    // ============================================================
-    //  EVENT WIRING
-    // ============================================================
     document.getElementById('loginToggleBtn').addEventListener('click', () => {
-      if (isAdmin) performLogout();
-      else openModal('loginModal');
+      if (isAdmin) performLogout(); else openModal('loginModal');
     });
-
     document.getElementById('cancelLoginBtn').addEventListener('click', () => closeModal('loginModal'));
     document.getElementById('submitLoginBtn').addEventListener('click', performLogin);
     document.getElementById('passwordInput').addEventListener('keypress', e => {
       if (e.key === 'Enter') performLogin();
     });
-
     document.getElementById('cancelSetupBtn').addEventListener('click', () => closeModal('setupModal'));
     document.getElementById('submitSetupBtn').addEventListener('click', performSetup);
-
     document.getElementById('forgotPasswordBtn').addEventListener('click', () => {
       closeModal('loginModal');
       openModal('forgotModal');
     });
     document.getElementById('cancelForgotBtn').addEventListener('click', () => closeModal('forgotModal'));
     document.getElementById('sendResetBtn').addEventListener('click', performForgotPassword);
-
     document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
       closeModal('deleteModal');
       pendingDeleteId = null;
     });
     document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
-
     document.getElementById('addPhotoBtn').addEventListener('click', openUploadModal);
     document.getElementById('logoutBtn2').addEventListener('click', performLogout);
     document.getElementById('refreshBtn').addEventListener('click', loadPhotos);
-
     document.getElementById('cancelUploadBtn').addEventListener('click', () => closeModal('uploadModal'));
     document.getElementById('confirmUploadBtn').addEventListener('click', performUpload);
 
@@ -1427,17 +1378,23 @@
     });
     uploadFileInput.addEventListener('change', e => handleUploadFile(e.target.files[0]));
 
-    // ============================================================
-    //  GLOBAL EVENT DELEGATION (grid clicks)
-    // ============================================================
-    const grid = document.getElementById('photoGrid');
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    document.getElementById('lightboxNext').addEventListener('click', lightboxNext);
+    document.getElementById('lightboxPrev').addEventListener('click', lightboxPrev);
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target.id === 'lightbox') closeLightbox();
+    });
 
+    const grid = document.getElementById('photoGrid');
     grid.addEventListener('click', async (e) => {
-      // ---- LIKE ----
+      const thumb = e.target.closest('.photo-thumb');
+      const interactive = e.target.closest('.photo-actions, .like-btn, .comment-form, .star-picker, .comments-section, .icon-btn');
+      if (thumb && !interactive) {
+        const card = thumb.closest('.photo-card');
+        if (card) { e.preventDefault(); openLightbox(card.dataset.id); return; }
+      }
       const likeBtn = e.target.closest('.like-btn');
       if (likeBtn) { e.preventDefault(); toggleLike(likeBtn.dataset.id, likeBtn); return; }
-
-      // ---- STAR ----
       const star = e.target.closest('.star-picker i');
       if (star) {
         e.preventDefault();
@@ -1448,16 +1405,12 @@
         submitRating(photoId, value, picker, thanks);
         return;
       }
-
-      // ---- COMMENT SUBMIT ----
       const submitBtn = e.target.closest('.comment-submit-btn');
       if (submitBtn) {
         e.preventDefault();
         submitComment(submitBtn.closest('.comment-form'));
         return;
       }
-
-      // ---- DELETE PHOTO (admin) ----
       if (!isAdmin) return;
       const delBtn = e.target.closest('.delete-photo');
       if (delBtn) {
@@ -1466,7 +1419,6 @@
       }
     });
 
-    // Star hover
     grid.addEventListener('mouseover', e => {
       const star = e.target.closest('.star-picker i');
       if (!star) return;
@@ -1482,7 +1434,6 @@
       picker.querySelectorAll('i').forEach(s => s.classList.remove('hovered'));
     });
 
-    // Char counter
     grid.addEventListener('input', e => {
       const ta = e.target.closest('.comment-text-input');
       if (!ta) return;
@@ -1491,17 +1442,23 @@
       if (cc) cc.textContent = ta.value.length + '/500';
     });
 
-    // Close modals on overlay click or Escape
     document.querySelectorAll('.modal-overlay').forEach(m => {
       m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
     });
+
     document.addEventListener('keydown', e => {
+      const lb = document.getElementById('lightbox');
+      if (lb.classList.contains('active')) {
+        if (e.key === 'Escape') closeLightbox();
+        else if (e.key === 'ArrowRight') lightboxNext();
+        else if (e.key === 'ArrowLeft') lightboxPrev();
+        return;
+      }
       if (e.key === 'Escape') {
         document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
       }
     });
 
-    // Password strength in setup
     document.getElementById('setupPasswordInput').addEventListener('input', e => {
       const pw = e.target.value;
       const bar = document.getElementById('setupPasswordStrengthBar');
@@ -1518,18 +1475,13 @@
       else bar.classList.add('strength-strong');
     });
 
-    // ============================================================
-    //  BOOT
-    // ============================================================
     (async function boot() {
       setupWhatsAppButton();
       await checkBackendHealth();
       const exists = await checkAdminExists();
       await checkSession();
       await loadPhotos();
-      if (!exists) {
-        openModal('setupModal');
-      }
+      if (!exists) openModal('setupModal');
     })();
 
   })();
